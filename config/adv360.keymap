@@ -8,22 +8,51 @@
 
 / {
     behaviors {
-      #include "macros.dtsi"
+        #include "macros.dtsi"
       #include "version.dtsi"
 
-      hm: homerow_mods {
-          compatible = "zmk,behavior-hold-tap";
-          label = "HOMEROW_MODS";
-          #binding-cells = <2>;
-          tapping-term-ms = <200>;
-          quick_tap_ms = <175>;
-          flavor = "tap-preferred";
-          bindings = <&kp>, <&kp>;
-      };
+        macro_ver: macro_ver {
+            compatible = "zmk,behavior-macro";
+            label = "macro_version";
+            #binding-cells = <0>;
+            bindings = <&kp RET>;
+        };
+
+        hm: homerow_mods {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HOMEROW_MODS";
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+            quick_tap_ms = <175>;
+            flavor = "tap-preferred";
+            bindings = <&kp>, <&kp>;
+        };
+
+        hml: hml {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HML";
+            bindings = <&kp>, <&kp>;
+
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+            flavor = "balanced";
+            hold-trigger-key-positions = <7 8 9 10 11 12 13 21 22 23 24 25 26 27 38 39 40 41 42 43 44 45 54 55 56 57 58 59 68 69 70 71 72 73 74 75 37 53>;
+        };
+
+        hmr: hmr {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HMR";
+            bindings = <&kp>, <&kp>;
+
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+            flavor = "balanced";
+            hold-trigger-key-positions = <0 1 2 3 4 5 6 14 15 16 17 18 19 20 28 29 30 31 32 33 34 35 36 46 47 48 49 50 51 52 60 61 62 63 64 65 66 67>;
+        };
     };
 
-  keymap {
-    compatible = "zmk,keymap";
+    macros {
+    };
 
     default_layer {
       display-name = "Base";
@@ -32,7 +61,7 @@
         &kp TAB   &kp Q     &kp W    &kp E    &kp R      &kp T  &none                                                            &none &kp Y  &kp U  &kp I     &kp O    &kp P    &kp BSLH
         &kp ESC   &kp A     &kp S    &kp D    &kp F      &kp G  &none           &kp LCTRL &kp LALT &kp LGUI  &kp RCTRL           &none &kp H  &kp J  &kp K     &kp L    &kp SEMI &kp SQT
         &kp LSHFT &kp Z     &kp X    &kp C    &kp V      &kp B                            &kp HOME &kp PG_UP                           &kp N  &kp M  &kp COMMA &kp DOT  &kp FSLH &kp RSHFT
-        &mo 2     &kp GRAVE &kp CAPS &kp LEFT &kp RIGHT                &kp BSPC &kp DEL   &kp END  &kp PG_DN &kp ENTER &kp SPACE              &kp UP &kp DOWN  &kp LBKT &kp RBKT &mo 2
+        &mo 2     &kp GRAVE &kp CAPS &kp LEFT &kp RIGHT                &kp BSPC &kp DEL   &kp END  &kp PG_DN &kp ENTER &lt 4 SPACE              &kp UP &kp DOWN  &kp LBKT &kp RBKT &mo 2
       >;
     };
     keypad {
@@ -63,6 +92,16 @@
         &studio_unlock &none        &none        &none        &none        &none        &none                   &none &none &bt BT_CLR &none                      &stp STP_BAT &none        &none        &none        &none &none &none
         &none &none        &none        &none        &macro_ver   &none                                      &none &none                                                        &none        &none        &none        &none &none &none
         &none &none        &none        &none        &none                                       &none &none &none &none      &bl BL_TOG &rgb_ug RGB_TOG                                     &bl BL_INC   &bl BL_DEC   &none &none &none
+      >;
+    };
+    flykey {
+      display-name = "Flykey";
+      bindings = <
+        &trans  &trans        &trans        &trans        &trans       &trans             &trans                                      &trans  &trans        &trans        &trans     &trans         &trans         &trans
+        &trans  &kp LA(UP)    &kp LG(BSPC)  &kp LA(BSPC)  &kp LA(DEL)  &kp LS(LG(RIGHT))  &trans                                      &trans  &kp LG(LEFT)  &kp LA(LEFT)  &kp UP     &kp LA(RIGHT)  &kp LG(RIGHT)  &trans
+        &trans  &kp LA(DOWN)  &kp LALT      &kp BSPC      &kp DEL      &kp LC(K)          &trans  &trans  &trans      &trans  &trans  &trans  &kp LC(A)     &kp LEFT      &kp DOWN   &kp RIGHT      &kp LC(E)      &trans
+        &trans  &kp ESC       &kp LG(UP)    &kp LG(DOWN)  &kp RET      &kp TAB                            &trans      &trans                  &kp HOME      &kp PG_UP     &kp PG_DN  &kp END        &trans         &trans
+        &trans  &trans        &trans        &trans        &trans                          &trans  &trans  &trans      &trans  &trans  &trans                &trans        &trans     &trans         &trans         &trans
       >;
     };
     extra1 { 
