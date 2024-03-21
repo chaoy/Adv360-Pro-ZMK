@@ -144,11 +144,11 @@
 
         flykey {
             bindings = <
-&trans  &trans        &trans        &trans        &trans       &trans             &trans                                      &trans  &trans        &trans        &trans     &trans         &trans         &trans
-&trans  &kp LA(UP)    &kp LG(BSPC)  &kp LA(BSPC)  &kp LA(DEL)  &kp LS(LG(RIGHT))  &trans                                      &trans  &kp LG(LEFT)  &kp LA(LEFT)  &kp UP     &kp LA(RIGHT)  &kp LG(RIGHT)  &trans
-&trans  &kp LA(DOWN)  &kp LALT      &kp BSPC      &kp DEL      &kp LC(K)          &trans  &trans  &trans      &trans  &trans  &trans  &kp LC(A)     &kp LEFT      &kp DOWN   &kp RIGHT      &kp LC(E)      &trans
-&trans  &kp ESC       &kp LG(UP)    &kp LG(DOWN)  &kp RET      &kp TAB                            &trans      &trans                  &kp HOME      &kp PG_UP     &kp PG_DN  &kp END        &trans         &trans
-&trans  &trans        &trans        &trans        &trans                          &trans  &trans  &trans      &trans  &trans  &trans                &trans        &trans     &trans         &trans         &trans
+&trans  &trans        &trans        &trans        &trans       &trans          &trans                                      &trans  &trans        &trans        &trans     &trans         &trans         &trans
+&trans  &kp LA(UP)    &kp LG(BSPC)  &kp LA(BSPC)  &kp LA(DEL)  &kp LG(DELETE)  &trans                                      &trans  &kp LG(LEFT)  &kp LA(LEFT)  &kp UP     &kp LA(RIGHT)  &kp LG(RIGHT)  &trans
+&trans  &kp LA(DOWN)  &kp LC(U)     &kp BSPC      &kp DEL      &kp LC(K)       &trans  &trans  &trans      &trans  &trans  &trans  &kp LC(A)     &kp LEFT      &kp DOWN   &kp RIGHT      &kp LC(E)      &trans
+&trans  &kp ESC       &kp LG(UP)    &kp LG(DOWN)  &kp RET      &kp TAB                         &trans      &trans                  &kp HOME      &kp PG_UP     &kp PG_DN  &kp END        &trans         &trans
+&trans  &trans        &trans        &trans        &trans                       &trans  &trans  &trans      &trans  &trans  &trans                &trans        &trans     &trans         &trans         &trans
             >;
         };
 
