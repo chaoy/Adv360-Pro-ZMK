@@ -69,14 +69,14 @@ The keymap defines 10 layers. Layer indices in ZMK bindings are zero-based:
 | 1 | `keypad` | Kp | `&tog 1` (toggle on number row) |
 | 2 | `fn` | Fn | `&mo 2` (hold left/right thumb corners) |
 | 3 | `mod` | Mod | `&mo 3` (hold right upper thumb key) |
-| 4 | `flykey` | — | `&lt 4 SPACE` (hold left Space thumb key) |
-| 5 | `num` | — | `&lt 5 BACKSPACE` (hold left Backspace thumb key) |
-| 6 | `extra1` | Red | Reserved for ZMK Studio / Clique |
-| 7 | `extra2` | Purple | Reserved for ZMK Studio / Clique |
-| 8 | `extra3` | Cyan | Reserved for ZMK Studio / Clique |
-| 9 | `extra4` | Yellow | Reserved for ZMK Studio / Clique |
+| 4 | `extra1` | Red | Reserved for ZMK Studio / Clique |
+| 5 | `extra2` | Purple | Reserved for ZMK Studio / Clique |
+| 6 | `extra3` | Cyan | Reserved for ZMK Studio / Clique |
+| 7 | `extra4` | Yellow | Reserved for ZMK Studio / Clique |
+| 8 | `flykey` | — | `&lt 8 SPACE` (hold left Space thumb key) |
+| 9 | `num` | — | `&lt 9 BACKSPACE` (hold left Backspace thumb key) |
 
-Layers 6–9 use `status = "reserved"` — they are empty placeholder layers that ZMK Studio (Clique) presents to the user for customization. **Do not remove them** — Studio depends on their presence during initialization.
+Layers 4–7 use `status = "reserved"` — matching the original Kinesis upstream indices exactly. **Do not remove or renumber them** — Studio depends on their presence during initialization, and keeping them at indices 4–7 makes future upstream merges trivial. Flykey (8) and num (9) are appended after, minimising the diff from upstream.
 
 ## Flykey Layer Concept
 
@@ -107,7 +107,7 @@ Row 4 (ZXCVB):  Esc  LG(↑)  LG(↓)   Ret    Tab     — escape, doc nav, conf
 
 ### Num layer layout
 
-Activated by holding the left Backspace thumb key (`&lt 5 BACKSPACE`). Numpad on the right hand, arithmetic operators on the outer column:
+Activated by holding the left Backspace thumb key (`&lt 9 BACKSPACE`). Numpad on the right hand, arithmetic operators on the outer column:
 
 ```
 Right row 2 (UIOP+): 7   8   9   *
@@ -148,7 +148,7 @@ Removing any of these three things will likely produce a Clique firmware where t
 
 ### Layer index discipline
 
-Never renumber layers without updating **all** `&lt`, `&mo`, `&tog`, and `&to` references throughout the keymap. The ten layers are tightly coupled by index. When adding a new layer, append it before the `extra*` reserved layers (i.e., before index 6) and add the activation binding explicitly.
+Never renumber layers without updating **all** `&lt`, `&mo`, `&tog`, and `&to` references throughout the keymap. The ten layers are tightly coupled by index. When adding a new layer, append it after the `num` layer (i.e., after index 9) and add the activation binding explicitly. Do not insert layers between indices 0–7, as that would shift either the reserved layers (breaking Studio) or the flykey/num indices.
 
 ### Flykey layer changes
 

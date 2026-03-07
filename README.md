@@ -8,8 +8,8 @@ The Flykey layer is a custom home-row navigation and editing layer, activated by
 
 | Thumb key | Tap | Hold |
 |-----------|-----|------|
-| Left Space / Right Space | Space | Flykey layer (layer 4) |
-| Left Backspace | Backspace | Num layer (layer 5) |
+| Left Space | Space | Flykey layer (layer 8) |
+| Left Backspace | Backspace | Num layer (layer 9) |
 
 ### Right hand — Navigation
 
@@ -50,7 +50,7 @@ LA(↓) MvLine  LC(U) Kill←  ⌫      Del    LC(K) Kill→
 - `LA(⌫)` / `LA(Del)` — delete word backward / forward
 - `LA(↑)` / `LA(↓)` — move line up/down (VS Code and compatible editors)
 
-### Num Layer (layer 5)
+### Num Layer (layer 9)
 
 Activated by holding the Backspace thumb key. Provides a numpad on the right hand:
 
