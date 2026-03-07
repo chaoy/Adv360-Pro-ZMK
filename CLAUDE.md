@@ -61,7 +61,7 @@ A version macro in `macros.dtsi` (auto-populated via `config/version.dtsi`) disp
 
 ## Layer Map
 
-The keymap defines 6 layers. Layer indices in ZMK bindings are zero-based:
+The keymap defines 10 layers. Layer indices in ZMK bindings are zero-based:
 
 | Index | Name | Display | Activated by |
 |-------|------|---------|--------------|
@@ -69,8 +69,14 @@ The keymap defines 6 layers. Layer indices in ZMK bindings are zero-based:
 | 1 | `keypad` | Kp | `&tog 1` (toggle on number row) |
 | 2 | `fn` | Fn | `&mo 2` (hold left/right thumb corners) |
 | 3 | `mod` | Mod | `&mo 3` (hold right upper thumb key) |
-| 4 | `flykey` | — | `&lt 4 SPACE` (hold either Space thumb key) |
+| 4 | `flykey` | — | `&lt 4 SPACE` (hold left Space thumb key) |
 | 5 | `num` | — | `&lt 5 BACKSPACE` (hold left Backspace thumb key) |
+| 6 | `extra1` | Red | Reserved for ZMK Studio / Clique |
+| 7 | `extra2` | Purple | Reserved for ZMK Studio / Clique |
+| 8 | `extra3` | Cyan | Reserved for ZMK Studio / Clique |
+| 9 | `extra4` | Yellow | Reserved for ZMK Studio / Clique |
+
+Layers 6–9 use `status = "reserved"` — they are empty placeholder layers that ZMK Studio (Clique) presents to the user for customization. **Do not remove them** — Studio depends on their presence during initialization.
 
 ## Flykey Layer Concept
 
@@ -130,9 +136,19 @@ Parameters: `tapping-term-ms = 200`, `quick_tap_ms = 175`. The `tap-preferred` f
 
 ## Guidelines for Modifying the Keymap
 
+### Clique (ZMK Studio) compatibility
+
+The Clique firmware (`build-clique` CI job) enables ZMK Studio via the `studio-rpc-usb-uart` snippet and `-DCONFIG_ZMK_STUDIO=y`. Three things must be preserved for Clique to work:
+
+1. **`#include <dt-bindings/zmk/pointing.h>`** — must stay in `adv360.keymap`. `CONFIG_ZMK_POINTING=y` is set in `adv360_left_defconfig`; removing the include creates a mismatch that can break Studio initialization.
+2. **`stp STP_BAT`** in the mod layer — Kinesis-fork-specific Studio Transport Protocol battery behavior. Required for Studio to complete its device handshake.
+3. **`extra1`–`extra4` reserved layers** — Studio enumerates all layers at boot including `status = "reserved"` ones. Removing them causes Studio initialization to stall, which blocks HID in this firmware fork.
+
+Removing any of these three things will likely produce a Clique firmware where the keyboard sends no key events to the computer even though the non-Clique firmware works fine.
+
 ### Layer index discipline
 
-Never renumber layers without updating **all** `&lt`, `&mo`, `&tog`, and `&to` references throughout the keymap. The six layers are tightly coupled by index. When adding a new layer, append it after layer 5 and add the activation binding explicitly.
+Never renumber layers without updating **all** `&lt`, `&mo`, `&tog`, and `&to` references throughout the keymap. The ten layers are tightly coupled by index. When adding a new layer, append it before the `extra*` reserved layers (i.e., before index 6) and add the activation binding explicitly.
 
 ### Flykey layer changes
 
