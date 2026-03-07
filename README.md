@@ -1,5 +1,90 @@
 # Kinesis Advantage 360 Pro ZMK Config
 
+## Flykey Layer
+
+The Flykey layer is a custom home-row navigation and editing layer, activated by **holding Space** on either thumb key. The design goal is to keep both hands on the home position for all cursor movement and text editing — no arrow key cluster required.
+
+### Activation
+
+| Thumb key | Tap | Hold |
+|-----------|-----|------|
+| Left Space / Right Space | Space | Flykey layer (layer 4) |
+| Left Backspace | Backspace | Num layer (layer 5) |
+
+### Right hand — Navigation
+
+When Flykey is active, the right hand becomes a navigation cluster:
+
+```
+    Y           U           I       O           P
+LG(←) Line  LA(←) Word  ↑     LA(→) Word  LG(→) Line
+
+    H         J     K     L         ;
+LC(A) Bol   ←     ↓     →     LC(E) Eol
+
+    N       M       ,       .
+  Home   PgUp   PgDn    End
+```
+
+- `LC(A)` / `LC(E)` — Emacs-style beginning/end of line (also works in macOS terminal)
+- `LG(←)` / `LG(→)` — macOS Cmd+Arrow = beginning/end of line in GUI apps
+- `LA(←)` / `LA(→)` — word-left / word-right
+
+### Left hand — Editing
+
+When Flykey is active, the left hand provides deletion and control shortcuts:
+
+```
+    Q           W               E              R           T
+LA(↑) MvLine  LG(⌫) DelLine  LA(⌫) DelWord  LA(Del) DelWd  LG(Del) DelLine→
+
+    A           S           D       F       G
+LA(↓) MvLine  LC(U) Kill←  ⌫      Del    LC(K) Kill→
+
+    Z     X          C           V     B
+   Esc  LG(↑) Doc↑  LG(↓) Doc↓  Ret  Tab
+```
+
+- `LC(U)` / `LC(K)` — Emacs/Unix kill-line backward / forward
+- `LG(⌫)` / `LG(Del)` — macOS delete to beginning / end of line
+- `LA(⌫)` / `LA(Del)` — delete word backward / forward
+- `LA(↑)` / `LA(↓)` — move line up/down (VS Code and compatible editors)
+
+### Num Layer (layer 5)
+
+Activated by holding the Backspace thumb key. Provides a numpad on the right hand:
+
+```
+    U   I   O   P
+    7   8   9   *
+
+    J   K   L   ;
+    4   5   6   =
+
+    M   ,   .   /
+    1   2   3   /
+
+        H
+        0   (inner thumb)
+```
+
+### Homerow Mods
+
+The base layer uses the `hm` (homerow mods) hold-tap behavior. Holding a home-row key produces the corresponding modifier rather than the letter:
+
+| Key | Tap | Hold |
+|-----|-----|------|
+| A | A | Left Control |
+| S | S | Left Alt |
+| D | D | Left Command (GUI) |
+| F | F | Left Shift |
+| J | J | Right Shift |
+| K | K | Right Command |
+| L | L | Right Alt |
+| ; | ; | Right Control |
+
+Settings: `tapping-term-ms = 200`, `quick_tap_ms = 175`, `flavor = "tap-preferred"`.
+
 ## Modifying the keymap
 
 [The ZMK documentation](https://zmk.dev/docs) covers both basic and advanced functionality and has a table of OS compatibility for keycodes. Please note that the RGB Underglow, Backlight and Power Management sections are not relevant to the Advantage 360 Pro's custom ZMK fork. For more information see [this note](#note)
