@@ -8,8 +8,9 @@ The Flykey layer is a custom home-row navigation and editing layer, activated by
 
 | Thumb key | Tap | Hold |
 |-----------|-----|------|
-| Left Space | Space | Flykey layer (layer 8) |
-| Left Backspace | Backspace | Num layer (layer 9) |
+| Left outer Space | Space | Flykey layer (layer 8) |
+| Right outer Space | Space | Flykey layer (layer 8) |
+| Left middle Backspace | Backspace | Num layer (layer 9) |
 
 ### Right hand — Navigation
 
@@ -68,20 +69,40 @@ Activated by holding the Backspace thumb key. Provides a numpad on the right han
         0   (inner thumb)
 ```
 
-### Homerow Mods
+### Homerow Mods and Dual-role Keys
 
-The base layer uses the `hm` (homerow mods) hold-tap behavior. Holding a home-row key produces the corresponding modifier rather than the letter:
+The base layer uses the `hm` hold-tap behavior throughout. All keys below: tap = symbol, hold = modifier.
+
+**Home row (A–; positions):**
 
 | Key | Tap | Hold |
 |-----|-----|------|
+| `left of A` | `` ` `` (and `~`) | Left Control |
 | A | A | Left Control |
 | S | S | Left Alt |
-| D | D | Left Command (GUI) |
+| D | D | Left Command |
 | F | F | Left Shift |
 | J | J | Right Shift |
 | K | K | Right Command |
 | L | L | Right Alt |
 | ; | ; | Right Control |
+| `right of ;` | `'` (and `"`) | Right Control |
+
+**Outer shift column:**
+
+| Key | Tap | Hold |
+|-----|-----|------|
+| `left of Z` | `\` (and `\|`) | Left Shift |
+| `right of /` | `/` (and `?`) | Right Shift |
+
+**Top thumb cluster:**
+
+| Key | Tap | Hold |
+|-----|-----|------|
+| Left thumb outer | `[` (and `{`) | Left Alt |
+| Left thumb inner | `]` (and `}`) | Left Command |
+| Right thumb inner | `-` (and `_`) | Right Command |
+| Right thumb outer | `=` (and `+`) | Right Alt |
 
 Settings: `tapping-term-ms = 200`, `quick_tap_ms = 175`, `flavor = "tap-preferred"`.
 

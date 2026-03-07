@@ -117,12 +117,15 @@ Right inner thumb:   0
 Left outer column:   +   (Y position)   -   (H position)
 ```
 
-### Homerow Mods (`hm` behavior)
+### Dual-role Keys (`hm` behavior)
 
-Base layer home-row keys use `hm` (a `hold-tap` with `flavor = "tap-preferred"`):
+The `hm` hold-tap (`flavor = "tap-preferred"`, `tapping-term-ms = 200`, `quick_tap_ms = 175`) is used throughout the base layer for all dual-role keys. Tap = symbol, hold = modifier.
+
+**Home row:**
 
 | Physical key | Tap | Hold |
 |---|---|---|
+| Left of A (outer pinky) | `` ` `` / `~` | Left Control |
 | A | A | Left Control |
 | S | S | Left Alt |
 | D | D | Left Command |
@@ -131,8 +134,25 @@ Base layer home-row keys use `hm` (a `hold-tap` with `flavor = "tap-preferred"`)
 | K | K | Right Command |
 | L | L | Right Alt |
 | ; | ; | Right Control |
+| Right of ; (outer pinky) | `'` / `"` | Right Control |
 
-Parameters: `tapping-term-ms = 200`, `quick_tap_ms = 175`. The `tap-preferred` flavor means the key registers as a tap if released before `tapping-term-ms` or if another key is pressed and released within that window.
+**Outer shift column:**
+
+| Physical key | Tap | Hold |
+|---|---|---|
+| Left of Z | `\` / `\|` | Left Shift |
+| Right of / | `/` / `?` | Right Shift |
+
+**Top thumb cluster (inner cluster between halves):**
+
+| Physical key | Tap | Hold |
+|---|---|---|
+| Left thumb outer (pos 35) | `[` / `{` | Left Alt |
+| Left thumb inner (pos 36) | `]` / `}` | Left Command |
+| Right thumb inner (pos 37) | `-` / `_` | Right Command |
+| Right thumb outer (pos 38) | `=` / `+` | Right Alt |
+
+The `tap-preferred` flavor means the key registers as a tap if released before `tapping-term-ms` or if another key is pressed and released within that window. To tune: adjust `tapping-term-ms` (increase for slower typists) or `quick_tap_ms`. Do **not** change `flavor` without testing.
 
 ## Guidelines for Modifying the Keymap
 
@@ -164,7 +184,11 @@ If homerow mods cause accidental modifier triggers, adjust `tapping-term-ms` (in
 
 ### `lt` (layer-tap) on thumb keys
 
-The Space and Backspace thumb keys use `&lt` (layer-tap). The tap keycode must match the key's primary role (Space sends Space, Backspace sends Backspace). Do not change the tap keycode unless also updating the physical label expectations.
+Three thumb keys use `&lt` (layer-tap):
+- Both **outer Space** keys (left pos 65, right pos 70): `&lt 8 SPACE` — tap = Space, hold = Flykey layer
+- **Left middle** (pos 66): `&lt 9 BACKSPACE` — tap = Backspace, hold = Num layer
+
+The tap keycode must match the key's primary role. Do not change the tap keycode without also updating physical label expectations.
 
 ### `keymap.json` and `info.json` sync
 
