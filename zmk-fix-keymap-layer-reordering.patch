@@ -1,0 +1,44 @@
+From d920ea0e5ee940f1e91dc0ac8a736dd94caa0ac1 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Sun, 8 Mar 2026 03:42:27 +0000
+Subject: [PATCH] fix(keymap): include reserved layers in stock layer ordering
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+load_stock_keymap_layer_ordering() used DT_INST_FOREACH_CHILD_STATUS_OKAY
+to populate keymap_layer_orders[], which skips DTS nodes with
+status = "reserved". This left those slots as ZMK_KEYMAP_LAYER_ID_INVAL,
+making any layer placed after a reserved node unreachable in the key
+dispatch loop in zmk_keymap_position_state_changed().
+
+The binding stored in &mo/&lt/&lt_b correctly passes the DTS child index
+as the layer ID, and ZMK_KEYMAP_LAYERS_LEN is counted via
+DT_FOREACH_CHILD (all children). The mismatch was only in this ordering
+table: STATUS_OKAY skipped reserved nodes, so layer IDs beyond the last
+reserved node never appeared in keymap_layer_orders[] and could never be
+activated.
+
+Fix by using DT_INST_FOREACH_CHILD instead, so all DTS children—including
+reserved ones—are assigned consecutive IDs in the ordering table. Reserved
+layers have zero-initialized bindings and are transparent in dispatch.
+---
+ app/src/keymap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/app/src/keymap.c b/app/src/keymap.c
+index 547d661..75c1c2d 100644
+--- a/app/src/keymap.c
++++ b/app/src/keymap.c
+@@ -595,7 +595,7 @@ int zmk_keymap_save_changes(void) {
+ 
+ static void load_stock_keymap_layer_ordering() {
+     int i = 0;
+-    DT_INST_FOREACH_CHILD_STATUS_OKAY(0, KEYMAP_LAYER_ORDER_INIT)
++    DT_INST_FOREACH_CHILD(0, KEYMAP_LAYER_ORDER_INIT)
+     while (i < ZMK_KEYMAP_LAYERS_LEN) {
+         keymap_layer_orders[i] = ZMK_KEYMAP_LAYER_ID_INVAL;
+         i++;
+-- 
+2.43.0
+
