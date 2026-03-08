@@ -73,8 +73,8 @@ The keymap defines 10 layers. Layer indices in ZMK bindings are zero-based:
 | 5 | `extra2` | Purple | Reserved for ZMK Studio / Clique |
 | 6 | `extra3` | Cyan | Reserved for ZMK Studio / Clique |
 | 7 | `extra4` | Yellow | Reserved for ZMK Studio / Clique |
-| 8 | `flykey` | — | `&lt 8 SPACE` (hold left Space thumb key) |
-| 9 | `num` | — | `&lt 9 BACKSPACE` (hold left Backspace thumb key) |
+| 8 | `flykey` | — | `&lt_b 8 SPACE` (hold left/right Space thumb key) |
+| 9 | `num` | — | `&lt_b 9 BACKSPACE` (hold left Backspace thumb key) |
 
 Layers 4–7 use `status = "reserved"` — matching the original Kinesis upstream indices exactly. **Do not remove or renumber them** — Studio depends on their presence during initialization, and keeping them at indices 4–7 makes future upstream merges trivial. Flykey (8) and num (9) are appended after, minimising the diff from upstream.
 
@@ -107,7 +107,7 @@ Row 4 (ZXCVB):  Esc  LG(↑)  LG(↓)   Ret    Tab     — escape, doc nav, conf
 
 ### Num layer layout
 
-Activated by holding the left Backspace thumb key (`&lt 9 BACKSPACE`). Numpad on the right hand, arithmetic operators on the outer column:
+Activated by holding the left Backspace thumb key (`&lt_b 9 BACKSPACE`). Numpad on the right hand, arithmetic operators on the outer column:
 
 ```
 Right row 2 (UIOP+): 7   8   9   *
@@ -117,15 +117,17 @@ Right inner thumb:   0
 Left outer column:   +   (Y position)   -   (H position)
 ```
 
-### Dual-role Keys (`hm` behavior)
+### Dual-role Keys (`hm` and `hm_b` behaviors)
 
-The `hm` hold-tap (`flavor = "tap-preferred"`, `tapping-term-ms = 200`, `quick_tap_ms = 175`) is used throughout the base layer for all dual-role keys. Tap = symbol, hold = modifier.
+Two hold-tap behaviors are used for dual-role keys, both with `tapping-term-ms = 200` and `quick_tap_ms = 175`:
 
-**Home row:**
+- **`hm`** (`tap-preferred`) — for home-row mods and top thumb cluster. Tap registers if released before timeout or if another key is pressed and released within the window. Best for fast typing on frequently-used keys.
+- **`hm_b`** (`balanced`) — for outer edge keys (pinky ctrl columns, shift columns). Hold triggers when another key is pressed **and released** while the key is still held, even before timeout. Better for keys that are naturally held while typing another key.
+
+**Home row (uses `hm` — tap-preferred):**
 
 | Physical key | Tap | Hold |
 |---|---|---|
-| Left of A (outer pinky) | `` ` `` / `~` | Left Control |
 | A | A | Left Control |
 | S | S | Left Alt |
 | D | D | Left Command |
@@ -134,16 +136,22 @@ The `hm` hold-tap (`flavor = "tap-preferred"`, `tapping-term-ms = 200`, `quick_t
 | K | K | Right Command |
 | L | L | Right Alt |
 | ; | ; | Right Control |
+
+**Outer pinky column (uses `hm_b` — balanced):**
+
+| Physical key | Tap | Hold |
+|---|---|---|
+| Left of A (outer pinky) | `` ` `` / `~` | Left Control |
 | Right of ; (outer pinky) | `'` / `"` | Right Control |
 
-**Outer shift column:**
+**Outer shift column (uses `hm_b` — balanced):**
 
 | Physical key | Tap | Hold |
 |---|---|---|
 | Left of Z | `\` / `\|` | Left Shift |
 | Right of / | `/` / `?` | Right Shift |
 
-**Top thumb cluster (inner cluster between halves):**
+**Top thumb cluster (uses `hm` — tap-preferred):**
 
 | Physical key | Tap | Hold |
 |---|---|---|
@@ -152,7 +160,7 @@ The `hm` hold-tap (`flavor = "tap-preferred"`, `tapping-term-ms = 200`, `quick_t
 | Right thumb inner (pos 37) | `-` / `_` | Right Command |
 | Right thumb outer (pos 38) | `=` / `+` | Right Alt |
 
-The `tap-preferred` flavor means the key registers as a tap if released before `tapping-term-ms` or if another key is pressed and released within that window. To tune: adjust `tapping-term-ms` (increase for slower typists) or `quick_tap_ms`. Do **not** change `flavor` without testing.
+To tune timing: adjust `tapping-term-ms` (increase for slower typists) or `quick_tap_ms` in the behavior definitions in `adv360.keymap`. The `hm` and `hm_b` behaviors can be tuned independently.
 
 ## Guidelines for Modifying the Keymap
 
@@ -182,13 +190,13 @@ The flykey layout is intentionally symmetric around macOS shortcut conventions:
 
 If homerow mods cause accidental modifier triggers, adjust `tapping-term-ms` (increase for slower typists) or `quick_tap_ms` in the `hm` behavior definition in `adv360.keymap`. Do **not** change `flavor` from `tap-preferred` without testing — other flavors (`hold-preferred`, `balanced`) interact differently with fast typing.
 
-### `lt` (layer-tap) on thumb keys
+### `lt_b` (layer-tap) on thumb keys
 
-Three thumb keys use `&lt` (layer-tap):
-- Both **outer Space** keys (left pos 65, right pos 70): `&lt 8 SPACE` — tap = Space, hold = Flykey layer
-- **Left middle** (pos 66): `&lt 9 BACKSPACE` — tap = Backspace, hold = Num layer
+Three thumb keys use `&lt_b` (custom balanced layer-tap, `tapping-term-ms = 200`, `quick_tap_ms = 175`):
+- Both **outer Space** keys (left pos 65, right pos 70): `&lt_b 8 SPACE` — tap = Space, hold = Flykey layer
+- **Left middle** (pos 66): `&lt_b 9 BACKSPACE` — tap = Backspace, hold = Num layer
 
-The tap keycode must match the key's primary role. Do not change the tap keycode without also updating physical label expectations.
+The `balanced` flavor ensures the layer activates when another key is pressed and released while the thumb key is held, even before the timeout. The tap keycode must match the key's primary role. Do not change the tap keycode without also updating physical label expectations.
 
 ### `keymap.json` and `info.json` sync
 
