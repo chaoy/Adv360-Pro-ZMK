@@ -192,11 +192,11 @@ If homerow mods cause accidental modifier triggers, adjust `tapping-term-ms` (in
 
 ### `lt_b` (layer-tap) on thumb keys
 
-Three thumb keys use `&lt_b` (custom balanced layer-tap, `tapping-term-ms = 200`, `quick_tap_ms = 175`):
+Three thumb keys use `&lt_b` (custom hold-preferred layer-tap, `tapping-term-ms = 200`, `quick_tap_ms = 175`):
 - Both **outer Space** keys (left pos 65, right pos 70): `&lt_b 4 SPACE` — tap = Space, hold = Flykey layer
 - **Left middle** (pos 66): `&lt_b 5 BACKSPACE` — tap = Backspace, hold = Num layer
 
-The `balanced` flavor ensures the layer activates when another key is pressed and released while the thumb key is held, even before the timeout. The tap keycode must match the key's primary role. Do not change the tap keycode without also updating physical label expectations.
+The `hold-preferred` flavor activates the layer as soon as another key is pressed while the thumb key is held, even before the timeout expires. The tap keycode must match the key's primary role. Do not change the tap keycode without also updating physical label expectations.
 
 ### `keymap.json` and `info.json` sync
 
