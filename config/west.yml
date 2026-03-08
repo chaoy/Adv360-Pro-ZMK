@@ -4,10 +4,12 @@ manifest:
       url-base: https://github.com/zmkfirmware
     - name: refil
       url-base: https://github.com/refil
+    - name: chaoy
+      url-base: https://github.com/chaoy
   projects:
     - name: zmk
-      remote: refil
-      revision: adv360-z3.5-2
+      remote: chaoy
+      revision: claude/fix-keymap-reserved-layers-wqgu5
       import: app/west.yml
   self:
     path: config
