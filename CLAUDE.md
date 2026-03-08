@@ -196,7 +196,7 @@ Three thumb keys use `&lt_b` (custom hold-preferred layer-tap, `tapping-term-ms 
 - Both **outer Space** keys (left pos 65, right pos 70): `&lt_b 4 SPACE` — tap = Space, hold = Flykey layer
 - **Left middle** (pos 66): `&lt_b 5 BACKSPACE` — tap = Backspace, hold = Num layer
 
-The `hold-preferred` flavor activates the layer as soon as another key is pressed while the thumb key is held, even before the timeout expires. The tap keycode must match the key's primary role. Do not change the tap keycode without also updating physical label expectations.
+The `hold-preferred` flavor activates the layer as soon as another key is pressed while the thumb key is held, even before the timeout expires. No `quick_tap_ms` is set — unlike the homerow mod behaviors, `quick_tap_ms` on a Space key would block flykey activation when holding Space immediately after typing a word ending in Space. The tap keycode must match the key's primary role. Do not change the tap keycode without also updating physical label expectations.
 
 ### `keymap.json` and `info.json` sync
 
