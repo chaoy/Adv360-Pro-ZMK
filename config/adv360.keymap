@@ -31,7 +31,7 @@
 &kp TAB                 &kp Q               &kp W           &kp E               &kp R             &kp T   &none                                                                                                    &none        &kp Y   &kp U              &kp I                &kp O            &kp P                   &kp BSLH
 &mt LEFT_CONTROL GRAVE  &hm LEFT_CONTROL A  &hm LEFT_ALT S  &hm LEFT_COMMAND D  &hm LEFT_SHIFT F  &kp G   &none        &mt LEFT_ALT LBKT  &mt LEFT_COMMAND RBKT      &mt RIGHT_COMMAND MINUS  &mt RIGHT_ALT EQUAL  &none        &kp H   &hm RIGHT_SHIFT J  &hm RIGHT_COMMAND K  &hm RIGHT_ALT L  &hm RIGHT_CONTROL SEMI  &mt RIGHT_CONTROL SQT
 &mt LSHFT BSLH          &kp Z               &kp X           &kp C               &kp V             &kp B                                   &kp HOME                   &kp PG_UP                                                  &kp N   &kp M              &kp COMMA            &kp DOT          &kp FSLH                &mt RSHFT QUESTION
-&mo 2                   &kp GRAVE           &kp GLOBE       &kp LEFT            &kp RIGHT                 &lt 4 SPACE  &lt 5 BACKSPACE    &kp END                    &kp PG_DN                &kp ENTER            &lt 4 SPACE          &kp UP             &kp DOWN             &kp LBKT         &kp RBKT                &mo 2
+&mo 2                   &kp GRAVE           &kp GLOBE       &kp LEFT            &kp RIGHT                 &lt 8 SPACE  &lt 9 BACKSPACE    &kp END                    &kp PG_DN                &kp ENTER            &lt 8 SPACE          &kp UP             &kp DOWN             &kp LBKT         &kp RBKT                &mo 2
             >;
         };
 
@@ -66,6 +66,26 @@
 &none           &none         &none         &none         &none         &none                             &none      &none                                    &none  &none       &none       &none  &none  &none
 &none           &none         &none         &none         &none                       &none        &none  &none      &none       &bl BL_TOG  &rgb_ug RGB_TOG         &bl BL_INC  &bl BL_DEC  &none  &none  &none
             >;
+        };
+
+        extra1 {
+            display-name = "Red";
+            status = "reserved";
+        };
+
+        extra2 {
+            display-name = "Purple";
+            status = "reserved";
+        };
+
+        extra3 {
+            display-name = "Cyan";
+            status = "reserved";
+        };
+
+        extra4 {
+            display-name = "Yellow";
+            status = "reserved";
         };
 
         flykey {
