@@ -208,3 +208,34 @@ The `hold-preferred` flavor activates the layer as soon as another key is presse
 - The `config/version.dtsi` file is regenerated on every build; don't manually edit it.
 - `firmware/*.uf2` files are gitignored.
 - Flashing requires putting each half into bootloader mode separately (hold reset while connecting USB).
+
+---
+
+## Session State (last updated 2026-03-08)
+
+### Original Goal and Current Status
+
+**Goal:** Fix flykey layer (was unreachable), then add two improvements: (1) easy ESC access, (2) ability to hold Space for key repeat.
+
+**Current status:** Flykey is fixed and working. Space-repeat and ESC are open; see below.
+
+### Key Findings and Decisions
+
+| Finding | Decision |
+|---------|----------|
+| Root cause of flykey bug: `DT_INST_FOREACH_CHILD_STATUS_OKAY` skips `status = "reserved"` nodes, leaving flykey/num with invalid ordering entries | Workaround: moved flykey → index 4, num → index 5 (before reserved layers). **Committed and working.** |
+| `lt` built-in has no `quick_tap_ms` → holding Space never produces repeated spaces | Added custom `lt_b` (hold-preferred, no `quick_tap_ms`). Intentionally no quick-tap: adding it would swallow the flykey hold trigger immediately after typing a space-ending word. This trade-off means holding Space from rest still fires flykey, but a fast tap+hold (word + Space + hold) would also fire Space-repeat rather than flykey — a known edge case the user has not yet evaluated on hardware. |
+| ESC already exists in flykey layer (Z position, left hand, row 4) | Sufficient for now, but user wants faster access. Placement decision deferred. |
+| ZMK upstream patch (`zmk-fix-keymap-layer-reordering.patch`) also fixes the bug properly for Studio builds | Patch authored; can't push — proxy only authorized for `chaoy/Adv360-Pro-ZMK`, not `chaoy/zmk`. |
+
+### Blocked / Pending Items
+
+- **ESC placement** — user deferred choice. Options: GRAVE key (tap = ESC, GRAVE moves to flykey/fn), J+K combo (positions 41+42), Q+W combo (positions 15+16). Implement once confirmed.
+- **ZMK fork patch** (`chaoy/zmk`, branch `adv360-z3.5-2`) — blocked; no proxy access to that repo. User must manually apply `zmk-fix-keymap-layer-reordering.patch` (steps in `/root/.claude/plans/parsed-growing-lampson.md`). After that, update `config/west.yml` to point at the fork.
+- **Space-repeat evaluation** — user needs to test on hardware whether the current `lt_b` (hold-preferred, no `quick_tap_ms`) meets needs or whether adding `quick_tap_ms = <175>` is acceptable despite the edge-case conflict with flykey-after-space.
+
+### Side Investigations
+
+- `west.yml` still points to `ReFil/zmk` (not `chaoy/zmk`) — no build impact until the ZMK patch is needed for Studio.
+- No combos currently defined anywhere; adding one requires a new top-level `/ { combos { ... }; };` block in `adv360.keymap`.
+- `keymap.json` has not been updated to reflect the new layer ordering or `lt_b` bindings — GUI editor will be out of sync until synced.
