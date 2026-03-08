@@ -1,116 +1,10 @@
 # Kinesis Advantage 360 Pro ZMK Config
 
-## Flykey Layer
-
-The Flykey layer is a custom home-row navigation and editing layer, activated by **holding Space** on either thumb key. The design goal is to keep both hands on the home position for all cursor movement and text editing — no arrow key cluster required.
-
-### Activation
-
-| Thumb key | Tap | Hold |
-|-----------|-----|------|
-| Left outer Space | Space | Flykey layer (layer 8) |
-| Right outer Space | Space | Flykey layer (layer 8) |
-| Left middle Backspace | Backspace | Num layer (layer 9) |
-
-### Right hand — Navigation
-
-When Flykey is active, the right hand becomes a navigation cluster:
-
-```
-    Y           U           I       O           P
-LG(←) Line  LA(←) Word  ↑     LA(→) Word  LG(→) Line
-
-    H         J     K     L         ;
-LC(A) Bol   ←     ↓     →     LC(E) Eol
-
-    N       M       ,       .
-  Home   PgUp   PgDn    End
-```
-
-- `LC(A)` / `LC(E)` — Emacs-style beginning/end of line (also works in macOS terminal)
-- `LG(←)` / `LG(→)` — macOS Cmd+Arrow = beginning/end of line in GUI apps
-- `LA(←)` / `LA(→)` — word-left / word-right
-
-### Left hand — Editing
-
-When Flykey is active, the left hand provides deletion and control shortcuts:
-
-```
-    Q           W               E              R           T
-LA(↑) MvLine  LG(⌫) DelLine  LA(⌫) DelWord  LA(Del) DelWd  LG(Del) DelLine→
-
-    A           S           D       F       G
-LA(↓) MvLine  LC(U) Kill←  ⌫      Del    LC(K) Kill→
-
-    Z     X          C           V     B
-   Esc  LG(↑) Doc↑  LG(↓) Doc↓  Ret  Tab
-```
-
-- `LC(U)` / `LC(K)` — Emacs/Unix kill-line backward / forward
-- `LG(⌫)` / `LG(Del)` — macOS delete to beginning / end of line
-- `LA(⌫)` / `LA(Del)` — delete word backward / forward
-- `LA(↑)` / `LA(↓)` — move line up/down (VS Code and compatible editors)
-
-### Num Layer (layer 9)
-
-Activated by holding the Backspace thumb key. Provides a numpad on the right hand:
-
-```
-    U   I   O   P
-    7   8   9   *
-
-    J   K   L   ;
-    4   5   6   =
-
-    M   ,   .   /
-    1   2   3   /
-
-        H
-        0   (inner thumb)
-```
-
-### Homerow Mods and Dual-role Keys
-
-The base layer uses the `hm` hold-tap behavior throughout. All keys below: tap = symbol, hold = modifier.
-
-**Home row (A–; positions):**
-
-| Key | Tap | Hold |
-|-----|-----|------|
-| `left of A` | `` ` `` (and `~`) | Left Control |
-| A | A | Left Control |
-| S | S | Left Alt |
-| D | D | Left Command |
-| F | F | Left Shift |
-| J | J | Right Shift |
-| K | K | Right Command |
-| L | L | Right Alt |
-| ; | ; | Right Control |
-| `right of ;` | `'` (and `"`) | Right Control |
-
-**Outer shift column:**
-
-| Key | Tap | Hold |
-|-----|-----|------|
-| `left of Z` | `\` (and `\|`) | Left Shift |
-| `right of /` | `/` (and `?`) | Right Shift |
-
-**Top thumb cluster:**
-
-| Key | Tap | Hold |
-|-----|-----|------|
-| Left thumb outer | `[` (and `{`) | Left Alt |
-| Left thumb inner | `]` (and `}`) | Left Command |
-| Right thumb inner | `-` (and `_`) | Right Command |
-| Right thumb outer | `=` (and `+`) | Right Alt |
-
-Settings: `tapping-term-ms = 200`, `quick_tap_ms = 175`, `flavor = "tap-preferred"`.
-
 ## Modifying the keymap
 
 [The ZMK documentation](https://zmk.dev/docs) covers both basic and advanced functionality and has a table of OS compatibility for keycodes. Please note that the RGB Underglow, Backlight and Power Management sections are not relevant to the Advantage 360 Pro's custom ZMK fork. For more information see [this note](#note)
 
-* If you would like to continue using GitHub we recommend using Nick Coutsos’s keymap editor: https://nickcoutsos.github.io/keymap-editor/.
+* If you would like to continue using GitHub we recommend using Nick Coutsos's keymap editor: https://nickcoutsos.github.io/keymap-editor/.
 * If you would prefer to leave GitHub and firmware flashing behind you can perform a one-time firmware update to gain access to Clique. Get started here: https://kinesis-ergo.com/360p-clique-upgrade/.
 
 Certain ZMK features (e.g. combos) require knowing the exact key positions in the matrix. They can be found in both image and text format [here](assets/key-positions.md)
@@ -193,7 +87,7 @@ Follow the programming instruction on page 8 of the [Quick Start Guide](https://
 1. Unplug the right side keyboard and turn it back on.
 1. Enjoy!
 
-> Note: There are also physical reset buttons on both keyboards which can be used to enter and exit the bootloader mode. Their location is described in section 2.7 on page 9 in the [User Manual](https://kinesis-ergo.com/wp-content/uploads/Advantage360-ZMK-KB360-PRO-Users-Manual-v3-10-23.pdf) and use is described in section 5.9 on page 14. 
+> Note: There are also physical reset buttons on both keyboards which can be used to enter and exit the bootloader mode. Their location is described in section 2.7 on page 9 in the [User Manual](https://kinesis-ergo.com/wp-content/uploads/Advantage360-ZMK-KB360-PRO-Users-Manual-v3-10-23.pdf) and use is described in section 5.9 on page 14.
 
 > Note: Some operating systems wont always treat the drive as ejected after the settings-reset file is flashed or may throw a spurious error, this doesn't mean that the flashing process has failed.
 
@@ -205,7 +99,7 @@ Updating from V2.0 based firmwares to V3.0 based firmwares can be a rather compl
 
 ## Versioning
 
-Starting on 11/15/2023 the Advantage 360 Pro will now automatically record the compilation date, branch and Git commit hash in a macro that can be accessed with Mod+V. This will type out the following string: YYYYMMDD-XXXX-YYYYYY, where XXXX is the first 4 characters of the Git branch and YYYYYY is the Git commit hash. In addition to this the builds compiled by GitHub actions are now timestamped and also record the commit hash in the filename. 
+Starting on 11/15/2023 the Advantage 360 Pro will now automatically record the compilation date, branch and Git commit hash in a macro that can be accessed with Mod+V. This will type out the following string: YYYYMMDD-XXXX-YYYYYY, where XXXX is the first 4 characters of the Git branch and YYYYYY is the Git commit hash. In addition to this the builds compiled by GitHub actions are now timestamped and also record the commit hash in the filename.
 
 ## N-Key Rollover
 
@@ -262,3 +156,170 @@ Further support resources can be found on Kinesis.com:
 In the event of a hardware issue it may be necessary to open a support ticket directly with Kinesis as opposed to a GitHub issue in this repository.
 * https://kinesis-ergo.com/support/kb360pro/#ticket
 
+---
+
+## My Customizations
+
+### Layer Overview
+
+| Index | Name | Activated by |
+|-------|------|--------------|
+| 0 | Base | Always on |
+| 1 | Keypad | `Mod+Kp` toggle |
+| 2 | Fn | Hold either Fn thumb corner |
+| 3 | Mod | Hold right upper thumb key |
+| 4 | **Flykey** | Hold Space (either side) |
+| 5 | **Num** | Hold left Backspace thumb key |
+| 6 | **Plain** | Space keys in Flykey layer |
+
+### Flykey Layer (layer 4)
+
+Activated by **holding Space** on either thumb key. Both hands stay on the home row for all cursor movement and text editing — no reaching for arrow keys or mouse required.
+
+#### Left hand — Editing
+
+```
+┌──────────┬──────────┬──────────┬──────────┬──────────┐
+│    Q     │    W     │    E     │    R     │    T     │
+│mv line ↑ │del line ←│del word ←│del word →│del line →│
+├──────────┼──────────┼──────────┼──────────┼──────────┤
+│    A     │    S     │    D     │    F     │    G     │
+│mv line ↓ │  kill ←  │  Bksp    │  Delete  │  kill →  │
+├──────────┼──────────┼──────────┼──────────┼──────────┤
+│    Z     │    X     │    C     │    V     │    B     │
+│   Esc    │  doc ↑   │  doc ↓   │  Return  │   Tab    │
+└──────────┴──────────┴──────────┴──────────┴──────────┘
+```
+
+| Key | Action | Shortcut |
+|-----|--------|---------|
+| Q | Move line up | `⌥↑` |
+| W | Delete to line start | `⌘⌫` |
+| E | Delete word left | `⌥⌫` |
+| R | Delete word right | `⌥⌦` |
+| T | Delete to line end | `⌘⌦` |
+| A | Move line down | `⌥↓` |
+| S | Kill to line start | `^U` (Emacs/Unix) |
+| D | Backspace | `⌫` |
+| F | Delete | `⌦` |
+| G | Kill to line end | `^K` (Emacs/Unix) |
+| Z | Escape | `Esc` |
+| X | Top of document | `⌘↑` |
+| C | Bottom of document | `⌘↓` |
+| V | Return | `↵` |
+| B | Tab | `⇥` |
+
+#### Right hand — Navigation
+
+```
+┌──────────┬──────────┬──────────┬──────────┬──────────┐
+│    Y     │    U     │    I     │    O     │    P     │
+│  line ←  │  word ←  │    ↑     │  word →  │  line →  │
+├──────────┼──────────┼──────────┼──────────┼──────────┤
+│    H     │    J     │    K     │    L     │    ;     │
+│  BOL ^A  │    ←     │    ↓     │    →     │  EOL ^E  │
+├──────────┼──────────┼──────────┼──────────┼──────────┤
+│    N     │    M     │    ,     │    .     │          │
+│   Home   │  Page ↑  │  Page ↓  │   End    │          │
+└──────────┴──────────┴──────────┴──────────┴──────────┘
+```
+
+| Key | Action | Shortcut |
+|-----|--------|---------|
+| Y | Line start (macOS) | `⌘←` |
+| U | Word left | `⌥←` |
+| I | Up | `↑` |
+| O | Word right | `⌥→` |
+| P | Line end (macOS) | `⌘→` |
+| H | Beginning of line | `^A` (Emacs/terminal) |
+| J | Left | `←` |
+| K | Down | `↓` |
+| L | Right | `→` |
+| ; | End of line | `^E` (Emacs/terminal) |
+| N | Home | `Home` |
+| M | Page up | `PgUp` |
+| , | Page down | `PgDn` |
+| . | End | `End` |
+
+#### Other flykey keys
+
+| Key | Action |
+|-----|--------|
+| Space (either) | Switch to Plain layer (layer 6) |
+
+### Num Layer (layer 5)
+
+Activated by **holding the left Backspace thumb key**. Numpad on the right hand, with arithmetic operators on the outer left column.
+
+```
+┌───┬───┬───┬───┬───┐
+│ Y │ U │ I │ O │ P │
+│ + │ 7 │ 8 │ 9 │ * │
+├───┼───┼───┼───┼───┤
+│ H │ J │ K │ L │ ; │
+│ 0 │ 4 │ 5 │ 6 │ = │
+├───┼───┼───┼───┼───┤
+│ N │ M │ , │ . │ / │
+│ - │ 1 │ 2 │ 3 │ / │
+└───┴───┴───┴───┴───┘
+Right thumb ↵ → return to Base layer
+Right thumb Space → 0
+```
+
+### Plain Layer (layer 6)
+
+Activated by pressing **Space while in the Flykey layer**. Disables all hold-tap behaviors on the thumb and outer-pinky keys, replacing them with plain keycodes. Use this when fast typing is triggering accidental layer switches or modifier activations.
+
+- Thumb Space keys → plain `Space` (no Flykey/Num layer-tap)
+- Outer pinky keys → plain `LCtrl` / `'` / `RCtrl`
+- Outer shift column → plain `LShift` / `RShift`
+- All letter keys remain transparent (home-row mods still work from the Base layer below)
+
+To return to Base, press the `&to 0` binding (mapped to a thumb key in your config).
+
+### Home-Row Mods
+
+All home-row keys have a dual role: **tap** for the letter, **hold** for a modifier. Keys in the home row use `tap-preferred` flavor; outer edge keys use `balanced` flavor. Tapping term: 200 ms. Quick-tap: 175 ms.
+
+#### Home row (A – ;) — tap-preferred
+
+```
+┌───────┬───────┬───────┬───────┐  ┌───────┬───────┬───────┬───────┐
+│  A    │  S    │  D    │  F    │  │  J    │  K    │  L    │  ;    │
+│LCtrl  │ LAlt  │ LCmd  │LShift │  │RShift │ RCmd  │ RAlt  │RCtrl  │
+└───────┴───────┴───────┴───────┘  └───────┴───────┴───────┴───────┘
+```
+
+#### Outer pinky column — balanced
+
+```
+┌──────────┐                                    ┌──────────┐
+│  ` / ~   │  ← left outer              right → │  ' / "   │
+│  LCtrl   │                                    │  RCtrl   │
+└──────────┘                                    └──────────┘
+```
+
+#### Outer shift column — balanced
+
+```
+┌──────────┐                                    ┌──────────┐
+│  \ / |   │  ← left of Z           right of / →│  / / ?   │
+│  LShift  │                                    │  RShift  │
+└──────────┘                                    └──────────┘
+```
+
+#### Top thumb cluster — tap-preferred
+
+```
+┌─────────┬─────────┐             ┌─────────┬─────────┐
+│  [ / {  │  ] / }  │             │  - / _  │  = / +  │
+│  LAlt   │  LCmd   │             │  RCmd   │  RAlt   │
+└─────────┴─────────┘             └─────────┴─────────┘
+```
+
+### Other Changes
+
+| Change | Details |
+|--------|---------|
+| Caps Lock → Esc | The Caps Lock key sends `Esc` in all layers |
+| Q+W combo → Esc | Pressing Q and W simultaneously within 50 ms sends `Esc` |
