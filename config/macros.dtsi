@@ -222,3 +222,88 @@
     bindings = <&mkp MB1 &mkp MB1>;
     display-name = "Double Click";
   };
+
+  /* Flykey layer macros — explicit modifier ordering.
+   * Using &macro_press/&macro_tap/&macro_release ensures the modifier is set
+   * in its own HID report BEFORE the key, avoiding macOS interpreting the
+   * implicit-modifier combined report as a spurious standalone modifier tap. */
+  fk_mv_ln_up: fk_mv_ln_up {
+    compatible = "zmk,behavior-macro";
+    #binding-cells = <0>;
+    bindings = <&macro_press &kp LALT>, <&macro_tap &kp UP>, <&macro_release &kp LALT>;
+  };
+  fk_del_ln_l: fk_del_ln_l {
+    compatible = "zmk,behavior-macro";
+    #binding-cells = <0>;
+    bindings = <&macro_press &kp LGUI>, <&macro_tap &kp BACKSPACE>, <&macro_release &kp LGUI>;
+  };
+  fk_del_wd_l: fk_del_wd_l {
+    compatible = "zmk,behavior-macro";
+    #binding-cells = <0>;
+    bindings = <&macro_press &kp LALT>, <&macro_tap &kp BACKSPACE>, <&macro_release &kp LALT>;
+  };
+  fk_del_wd_r: fk_del_wd_r {
+    compatible = "zmk,behavior-macro";
+    #binding-cells = <0>;
+    bindings = <&macro_press &kp LALT>, <&macro_tap &kp DELETE>, <&macro_release &kp LALT>;
+  };
+  fk_del_ln_r: fk_del_ln_r {
+    compatible = "zmk,behavior-macro";
+    #binding-cells = <0>;
+    bindings = <&macro_press &kp LGUI>, <&macro_tap &kp DELETE>, <&macro_release &kp LGUI>;
+  };
+  fk_ln_home: fk_ln_home {
+    compatible = "zmk,behavior-macro";
+    #binding-cells = <0>;
+    bindings = <&macro_press &kp LGUI>, <&macro_tap &kp LEFT>, <&macro_release &kp LGUI>;
+  };
+  fk_wd_left: fk_wd_left {
+    compatible = "zmk,behavior-macro";
+    #binding-cells = <0>;
+    bindings = <&macro_press &kp LALT>, <&macro_tap &kp LEFT>, <&macro_release &kp LALT>;
+  };
+  fk_wd_right: fk_wd_right {
+    compatible = "zmk,behavior-macro";
+    #binding-cells = <0>;
+    bindings = <&macro_press &kp LALT>, <&macro_tap &kp RIGHT>, <&macro_release &kp LALT>;
+  };
+  fk_ln_end: fk_ln_end {
+    compatible = "zmk,behavior-macro";
+    #binding-cells = <0>;
+    bindings = <&macro_press &kp LGUI>, <&macro_tap &kp RIGHT>, <&macro_release &kp LGUI>;
+  };
+  fk_mv_ln_dn: fk_mv_ln_dn {
+    compatible = "zmk,behavior-macro";
+    #binding-cells = <0>;
+    bindings = <&macro_press &kp LALT>, <&macro_tap &kp DOWN>, <&macro_release &kp LALT>;
+  };
+  fk_kill_l: fk_kill_l {
+    compatible = "zmk,behavior-macro";
+    #binding-cells = <0>;
+    bindings = <&macro_press &kp LCTRL>, <&macro_tap &kp U>, <&macro_release &kp LCTRL>;
+  };
+  fk_kill_r: fk_kill_r {
+    compatible = "zmk,behavior-macro";
+    #binding-cells = <0>;
+    bindings = <&macro_press &kp LCTRL>, <&macro_tap &kp K>, <&macro_release &kp LCTRL>;
+  };
+  fk_bol: fk_bol {
+    compatible = "zmk,behavior-macro";
+    #binding-cells = <0>;
+    bindings = <&macro_press &kp LCTRL>, <&macro_tap &kp A>, <&macro_release &kp LCTRL>;
+  };
+  fk_eol: fk_eol {
+    compatible = "zmk,behavior-macro";
+    #binding-cells = <0>;
+    bindings = <&macro_press &kp LCTRL>, <&macro_tap &kp E>, <&macro_release &kp LCTRL>;
+  };
+  fk_doc_top: fk_doc_top {
+    compatible = "zmk,behavior-macro";
+    #binding-cells = <0>;
+    bindings = <&macro_press &kp LGUI>, <&macro_tap &kp UP>, <&macro_release &kp LGUI>;
+  };
+  fk_doc_bot: fk_doc_bot {
+    compatible = "zmk,behavior-macro";
+    #binding-cells = <0>;
+    bindings = <&macro_press &kp LGUI>, <&macro_tap &kp DOWN>, <&macro_release &kp LGUI>;
+  };

@@ -91,9 +91,9 @@
     flykey {
       bindings = <
         &trans  &trans        &trans             &trans             &trans          &trans          &trans                                      &trans  &trans        &trans        &trans     &trans         &trans         &trans
-        &trans  &kp LA(UP)    &kp LG(BACKSPACE)  &kp LA(BACKSPACE)  &kp LA(DELETE)  &kp LG(DELETE)  &trans                                      &trans  &kp LG(LEFT)  &kp LA(LEFT)  &kp UP     &kp LA(RIGHT)  &kp LG(RIGHT)  &trans
-        &trans  &kp LA(DOWN)  &kp LC(U)          &kp BSPC           &kp DELETE      &kp LC(K)       &trans  &trans  &trans      &trans  &trans  &trans  &kp LC(A)     &kp LEFT      &kp DOWN   &kp RIGHT      &kp LC(E)      &trans
-        &trans  &kp ESC       &kp LG(UP)         &kp LG(DOWN)       &kp RET         &kp TAB                         &trans      &trans                  &kp HOME      &kp PG_UP     &kp PG_DN  &kp END        &trans         &trans
+        &trans  &fk_mv_ln_up  &fk_del_ln_l       &fk_del_wd_l       &fk_del_wd_r    &fk_del_ln_r    &trans                                      &trans  &fk_ln_home   &fk_wd_left   &kp UP     &fk_wd_right   &fk_ln_end     &trans
+        &trans  &fk_mv_ln_dn  &fk_kill_l         &kp BSPC           &kp DELETE      &fk_kill_r      &trans  &trans  &trans      &trans  &trans  &trans  &fk_bol       &kp LEFT      &kp DOWN   &kp RIGHT      &fk_eol        &trans
+        &trans  &kp ESC       &fk_doc_top        &fk_doc_bot        &kp RET         &kp TAB                         &trans      &trans                  &kp HOME      &kp PG_UP     &kp PG_DN  &kp END        &trans         &trans
         &trans  &trans        &trans             &trans             &trans                          &to 6   &trans  &trans      &trans  &trans  &to 6                 &trans        &trans     &trans         &trans         &trans
       >;
     };
