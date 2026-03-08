@@ -69,14 +69,14 @@ The keymap defines 10 layers. Layer indices in ZMK bindings are zero-based:
 | 1 | `keypad` | Kp | `&tog 1` (toggle on number row) |
 | 2 | `fn` | Fn | `&mo 2` (hold left/right thumb corners) |
 | 3 | `mod` | Mod | `&mo 3` (hold right upper thumb key) |
-| 4 | `extra1` | Red | Reserved for ZMK Studio / Clique |
-| 5 | `extra2` | Purple | Reserved for ZMK Studio / Clique |
-| 6 | `extra3` | Cyan | Reserved for ZMK Studio / Clique |
-| 7 | `extra4` | Yellow | Reserved for ZMK Studio / Clique |
-| 8 | `flykey` | — | `&lt_b 8 SPACE` (hold left/right Space thumb key) |
-| 9 | `num` | — | `&lt_b 9 BACKSPACE` (hold left Backspace thumb key) |
+| 4 | `flykey` | — | `&lt_b 4 SPACE` (hold left/right Space thumb key) |
+| 5 | `num` | — | `&lt_b 5 BACKSPACE` (hold left Backspace thumb key) |
+| 6 | `extra1` | Red | Reserved for ZMK Studio / Clique |
+| 7 | `extra2` | Purple | Reserved for ZMK Studio / Clique |
+| 8 | `extra3` | Cyan | Reserved for ZMK Studio / Clique |
+| 9 | `extra4` | Yellow | Reserved for ZMK Studio / Clique |
 
-Layers 4–7 use `status = "reserved"` — matching the original Kinesis upstream indices exactly. **Do not remove or renumber them** — Studio depends on their presence during initialization, and keeping them at indices 4–7 makes future upstream merges trivial. Flykey (8) and num (9) are appended after, minimising the diff from upstream.
+**Why flykey/num come before the reserved layers:** The non-Studio firmware uses `DT_INST_FOREACH_CHILD_STATUS_OKAY_SEP` to enumerate layers, which **skips** nodes with `status = "reserved"`. If flykey were at DTS index 8 (after 4 reserved layers), only 6 layers would be compiled in non-Studio builds and `&lt_b 8` would silently fail. By placing flykey at DTS index 4 and num at 5, both Studio and non-Studio builds use the same layer indices. The reserved layers are appended last — Studio includes them via `DT_INST_FOREACH_CHILD_SEP` (all nodes); non-Studio skips them with no effect since no binding references indices 6–9.
 
 ## Flykey Layer Concept
 
@@ -107,7 +107,7 @@ Row 4 (ZXCVB):  Esc  LG(↑)  LG(↓)   Ret    Tab     — escape, doc nav, conf
 
 ### Num layer layout
 
-Activated by holding the left Backspace thumb key (`&lt_b 9 BACKSPACE`). Numpad on the right hand, arithmetic operators on the outer column:
+Activated by holding the left Backspace thumb key (`&lt_b 5 BACKSPACE`). Numpad on the right hand, arithmetic operators on the outer column:
 
 ```
 Right row 2 (UIOP+): 7   8   9   *
@@ -176,7 +176,7 @@ Removing any of these three things will likely produce a Clique firmware where t
 
 ### Layer index discipline
 
-Never renumber layers without updating **all** `&lt`, `&mo`, `&tog`, and `&to` references throughout the keymap. The ten layers are tightly coupled by index. When adding a new layer, append it after the `num` layer (i.e., after index 9) and add the activation binding explicitly. Do not insert layers between indices 0–7, as that would shift either the reserved layers (breaking Studio) or the flykey/num indices.
+Never renumber layers without updating **all** `&lt`, `&mo`, `&tog`, and `&to` references throughout the keymap. The ten layers are tightly coupled by index. When adding a new layer, append it after the reserved layers (i.e., after index 9). Do not insert layers between indices 0–5, as that would shift flykey/num indices and break thumb key activation. Do not insert layers between flykey/num and the reserved block (indices 4–5 vs 6–9), as that would shift the reserved layer indices within Studio.
 
 ### Flykey layer changes
 
@@ -193,8 +193,8 @@ If homerow mods cause accidental modifier triggers, adjust `tapping-term-ms` (in
 ### `lt_b` (layer-tap) on thumb keys
 
 Three thumb keys use `&lt_b` (custom balanced layer-tap, `tapping-term-ms = 200`, `quick_tap_ms = 175`):
-- Both **outer Space** keys (left pos 65, right pos 70): `&lt_b 8 SPACE` — tap = Space, hold = Flykey layer
-- **Left middle** (pos 66): `&lt_b 9 BACKSPACE` — tap = Backspace, hold = Num layer
+- Both **outer Space** keys (left pos 65, right pos 70): `&lt_b 4 SPACE` — tap = Space, hold = Flykey layer
+- **Left middle** (pos 66): `&lt_b 5 BACKSPACE` — tap = Backspace, hold = Num layer
 
 The `balanced` flavor ensures the layer activates when another key is pressed and released while the thumb key is held, even before the timeout. The tap keycode must match the key's primary role. Do not change the tap keycode without also updating physical label expectations.
 
