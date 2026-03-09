@@ -7,8 +7,8 @@ How to use the modified Kinesis Advantage 360 Pro firmware.
 | Customization | How to use |
 |---|---|
 | **Flykey layer** | Hold either Space key — home-row navigation and editing |
-| **Num layer** | Hold left Backspace — numpad on the right hand |
-| **Plain layer** | Press Space while in Flykey — disables accidental layer-hops |
+| **Edit layer** | Hold left Backspace or Enter — numpad + mods + edit shortcuts |
+| **NoFly layer** | Press Space while in Flykey — disables accidental layer-hops |
 | **Home-row mods** | Hold any home-row key ≥200 ms to send a modifier |
 | **Caps Lock → Esc** | Caps Lock sends Escape |
 | **Q+W → Esc** | Simultaneous Q+W (within 50 ms) sends Escape |
@@ -21,24 +21,23 @@ How to use the modified Kinesis Advantage 360 Pro firmware.
 flowchart LR
     B([Base\nlayer 0])
     F([Flykey\nlayer 4])
-    N([Num\nlayer 5])
-    P([Plain\nlayer 6])
+    E([Edit\nlayer 5])
+    N([NoFly\nlayer 6])
 
     B -->|"Hold Space (either)"| F
     F -->|"Release Space"| B
-    F -->|"Press Space while held"| P
-    P -->|"Press Space or any layer key"| B
+    F -->|"Press Space while held"| N
+    N -->|"Press Space or any layer key"| B
 
-    B -->|"Hold left Backspace"| N
-    N -->|"Release Backspace"| B
-    N -->|"Press Enter"| B
-
-    B -->|"Hold Fn corner key"| Fn([Fn\nlayer 2])
-    Fn -->|"Release Fn"| B
+    B -->|"Hold left Backspace"| E
+    B -->|"Hold Enter"| E
+    E -->|"Release Backspace / Enter"| B
+    E -->|"Press Backspace"| B
+    E -->|"Press Space (either)"| N
 ```
 
-**Momentary layers** (Flykey, Num, Fn) are active only while you hold the key — release to return.
-**Plain** is different: it *latches*. Hold Space → tap Space → release Space. You stay in Plain until you press Space or a layer key again.
+**Momentary layers** (Flykey, Edit) are active only while you hold the key — release to return.
+**NoFly** is different: it *latches*. Hold Space → tap Space → release Space. You stay in NoFly until you press Space or a layer key again.
 
 ---
 
@@ -74,12 +73,13 @@ Modifier abbreviations: `⌃` Control · `⌥` Option/Alt · `⌘` Command · `�
  └────┴────┴─────┴───┴───┘         └─────┴────┴─────┘   └───┴───┴───┴───┴────┘
            ┌───────────┬──────────┐         ┌───────────┐
            │   Space   │ Backspace│         │   Space   │
-           │ (Flykey)  │  (Num)   │         │ (Flykey)  │
+           │ (Flykey)  │  (Edit)  │         │ (Flykey)  │
            └───────────┴──────────┘         └───────────┘
 ```
 
 Thumb Space keys: **tap** = Space, **hold** = Flykey layer.
-Left Backspace: **tap** = Backspace, **hold** = Num layer.
+Left Backspace: **tap** = Backspace, **hold** = Edit layer.
+Enter: **tap** = Enter, **hold** = Edit layer.
 `Fn` corner keys: **hold** = Fn layer.
 
 ---
@@ -88,18 +88,20 @@ Left Backspace: **tap** = Backspace, **hold** = Num layer.
 
 Hold either Space key to activate. The left hand handles text editing; the right hand handles cursor movement. Everything else passes through to the Base layer (home-row mods still work).
 
+### Full Keyboard
+
+```
+ ←────────────── Left half ──────────────→   ←─────────────── Right half ──────────────→
+
+  ·    ·    ·    ·    ·    ·    ·             ·      ·    ·    ·    ·    ·    ·
+  ·   mv↑  ⌘⌫   ⌥⌫   ⌥⌦  ⌘⌦   ·             ·     ⌘←   ⌥←   ↑    ⌥→  ⌘→   ·
+  ·   mv↓  ^U   ⌫    ⌦   ^K   ·              ·      ·   ^A   ←    ↓    →   ^E   ·
+  ·   Esc  ⌘↑   ⌘↓   ↵    ⇥   ·    ·         Hm  PgU  PgD  End   ·    ·
+```
+
+`·` = same as Base.  Thumb Space → **NoFly layer** (instead of normal Space).
+
 ### Left Hand — Editing
-
-```
-  Q      W      E      R      T
- mv↑    ⌘⌫     ⌥⌫     ⌥⌦     ⌘⌦
-
-  A      S      D      F      G
- mv↓    ^U      ⌫      ⌦     ^K
-
-  Z      X      C      V      B
- Esc    ⌘↑     ⌘↓      ↵      ⇥
-```
 
 | Key | What it does |
 |-----|-------------|
@@ -118,20 +120,9 @@ Hold either Space key to activate. The left hand handles text editing; the right
 | C | Jump to bottom of document (⌘↓) |
 | V | Return |
 | B | Tab |
-| **Space** | **Switch to Plain layer** |
+| **Space** | **Switch to NoFly layer** |
 
 ### Right Hand — Navigation
-
-```
-  Y      U      I      O      P
- ⌘←     ⌥←     ↑      ⌥→    ⌘→
-
-  H      J      K      L      ;
- ^A      ←      ↓      →     ^E
-
-  N      M      ,      .
- Hom    PgU    PgD    End
-```
 
 | Key | What it does |
 |-----|-------------|
@@ -154,37 +145,98 @@ Hold either Space key to activate. The left hand handles text editing; the right
 
 ---
 
-## Num Layer — Hold Left Backspace
+## Edit Layer — Hold Left Backspace or Enter
 
-Hold the left Backspace thumb key. The right hand becomes a numpad; the left hand passes through to Base.
+Hold the left Backspace or Enter thumb key. The right hand becomes a numpad; the left hand provides pure modifier keys and common edit shortcuts.
 
-```
- ←── Left: unchanged ────────────→   ←── Right: numpad ───────────────→
-
-  ·    ·    ·    ·    ·    ·    ·     ·    +    7    8    9    *    ·
-  ·    ·    ·    ·    ·    ·    ·     ·    0    4    5    6    =    ·
-  ·    ·    ·    ·    ·    ·    ·     ·    -    1    2    3    /    ·
-```
+### Full Keyboard
 
 ```
-Thumb:  [ Enter → Base ]  [ Space = 0 ]
+ ←────────────── Left half ──────────────→   ←─────────────── Right half ──────────────→
+
+  ·    ·    ·    ·    ·    ·    ·             ·      ·    +    7    8    9    *    ·
+  ·    ·    ·    ·    ·    ·                          ·    0    4    5    6    =    ·
+  ·    ⌃    ⌥    ⌘    ⇧   Spc  ·              ·       ·   -    1    2    3    /    ·
+  ·   Undo Cut  Copy Pst  Redo  ·    ·
+```
+
+`·` = same as Base.  Thumb cluster:
+
+```
+           ┌───────────┬──────────┐         ┌───────────┐
+           │  NoFly    │  →Base   │         │  NoFly    │
+           │  (Space)  │  (Bsp)   │         │  (Space)  │
+           └───────────┴──────────┘         └───────────┘
+```
+
+### Left Hand
+
+**Home row** — pure modifiers (no letter output, no tap delay):
+
+| Key | Output |
+|-----|--------|
+| A | ⌃ Control |
+| S | ⌥ Option |
+| D | ⌘ Command |
+| F | ⇧ Shift |
+| G | Space |
+
+**Bottom row** — edit shortcuts (⌘-chord macros):
+
+| Key | Action |
+|-----|--------|
+| Z | Undo (⌘Z) |
+| X | Cut (⌘X) |
+| C | Copy (⌘C) |
+| V | Paste (⌘V) |
+| B | Redo (⌘⇧Z) |
+
+**Thumb:**
+- Left Space → NoFly layer
+- Backspace → back to Base (`&to 0`)
+- Right Space → NoFly layer
+
+### Right Hand — Numpad
+
+```
+ ←── Right: numpad ────────────────→
+
+  ·    +    7    8    9    *    ·
+  ·    0    4    5    6    =    ·
+  ·    -    1    2    3    /    ·
 ```
 
 - `+` is under the Y key (left column of right hand, row 2)
-- `0` is under H (left column of right hand, row 3) — also on right thumb Space
+- `0` is under H (left column of right hand, row 3)
 - `-` is under N (left column of right hand, row 4)
-- Press **Enter** to leave the Num layer and return to Base
 
 ---
 
-## Plain Layer — Tap Space while in Flykey
+## NoFly Layer — Tap Space while in Flykey
 
 **Problem it solves:** When typing fast, holding Space briefly while reaching for the next key can accidentally trigger the Flykey layer, sending navigation commands instead of characters.
 
 **How to enter:** While holding Space (Flykey active), tap Space again, then release.
-**What changes:** The Space thumb keys send plain Space (no layer-hop). All hold-tap behaviours on the outer-column keys and thumb cluster are disabled.
-**Letter keys are unchanged** — home-row mods still work.
-**How to leave:** Press Space or any layer key.
+
+### Full Keyboard
+
+Most keys behave as Base. The changes are in the outer columns and thumb cluster:
+
+```
+ ←────────────── Left half ──────────────→   ←─────────────── Right half ──────────────→
+
+  ·    ·    ·    ·    ·    ·    ·             ·      ·    ·    ·    ·    ·    ·
+  ·    ·    ·    ·    ·    ·                          ·    ·    ·    ·    ·    ·
+  ⌃   A/⌃  S/⌥  D/⌘  F/⇧   ·   ⌥    ⌘      ⌥   ⌘   ·   J/⇧  K/⌘  L/⌥  ;/⌃   '
+  ⇧    ·    ·    ·    ·    ·                          ·    ·    ·    ·    ·    ⇧
+```
+
+**What changes:**
+- Outer-column keys that had dual tap/hold roles now send their modifier directly (no tap symbol).
+- Space thumb keys send plain Space — **no Flykey activation**.
+- Home-row mods (A/S/D/F/J/K/L/;) are **unchanged** — still work as normal.
+
+**How to leave:** Press either Space or any layer key (Fn, Kp, etc.).
 
 ---
 
@@ -235,4 +287,26 @@ Thumb:  [ Enter → Base ]  [ Space = 0 ]
 | B | Tab |
 | Q | Move line up |
 | A | Move line down |
-| Space | Enter Plain layer |
+| Space | Enter NoFly layer |
+
+### Edit layer shortcuts
+
+**Left hand modifiers** (pure — no letter output)
+
+| Key | Modifier |
+|---|---|
+| A | ⌃ Control |
+| S | ⌥ Option |
+| D | ⌘ Command |
+| F | ⇧ Shift |
+| G | Space |
+
+**Left hand edit shortcuts**
+
+| Key | Action |
+|---|---|
+| Z | Undo ⌘Z |
+| X | Cut ⌘X |
+| C | Copy ⌘C |
+| V | Paste ⌘V |
+| B | Redo ⌘⇧Z |

@@ -36,7 +36,7 @@ The firmware uses a **custom ZMK fork** (`github.com/ReFil/zmk`, branch `adv360-
 
 | File | Purpose |
 |------|---------|
-| `config/adv360.keymap` | Main keymap (6 layers: Base, Keypad, Function, Modifier, Flykey, Num) |
+| `config/adv360.keymap` | Main keymap (7 layers: Base, Keypad, Function, Modifier, Flykey, Edit, NoFly) |
 | `config/macros.dtsi` | Custom ZMK behaviors and macro definitions |
 | `config/boards/arm/adv360/adv360.dtsi` | Hardware device tree (matrix, LEDs, battery, SPI) |
 | `config/boards/arm/adv360/adv360_left_defconfig` | Left half build config (NRF52840, BT, USB, RGB) |
@@ -70,13 +70,17 @@ The keymap defines 10 layers. Layer indices in ZMK bindings are zero-based:
 | 2 | `fn` | Fn | `&mo 2` (hold left/right thumb corners) |
 | 3 | `mod` | Mod | `&mo 3` (hold right upper thumb key) |
 | 4 | `flykey` | — | `&lt_b 4 SPACE` (hold left/right Space thumb key) |
-| 5 | `num` | — | `&lt_b 5 BACKSPACE` (hold left Backspace thumb key) |
-| 6 | `extra1` | Red | Reserved for ZMK Studio / Clique |
+| 5 | `num` | Edit | `&lt_b 5 BACKSPACE` (hold left Backspace) or `&lt 5 ENTER` (hold Enter) |
+| 6 | `plain` | NoFly | `&to 6` from flykey Space keys; latching layer |
+| 7 | `extra1` | Red | Reserved for ZMK Studio / Clique |
+| 8 | `extra2` | Purple | Reserved for ZMK Studio / Clique |
+| 9 | `extra3` | Cyan | Reserved for ZMK Studio / Clique |
+| 10 | `extra4` | Yellow | Reserved for ZMK Studio / Clique |
 | 7 | `extra2` | Purple | Reserved for ZMK Studio / Clique |
 | 8 | `extra3` | Cyan | Reserved for ZMK Studio / Clique |
 | 9 | `extra4` | Yellow | Reserved for ZMK Studio / Clique |
 
-**Why flykey/num come before the reserved layers:** The non-Studio firmware uses `DT_INST_FOREACH_CHILD_STATUS_OKAY_SEP` to enumerate layers, which **skips** nodes with `status = "reserved"`. If flykey were at DTS index 8 (after 4 reserved layers), only 6 layers would be compiled in non-Studio builds and `&lt_b 8` would silently fail. By placing flykey at DTS index 4 and num at 5, both Studio and non-Studio builds use the same layer indices. The reserved layers are appended last — Studio includes them via `DT_INST_FOREACH_CHILD_SEP` (all nodes); non-Studio skips them with no effect since no binding references indices 6–9.
+**Why flykey/num/plain come before the reserved layers:** The non-Studio firmware uses `DT_INST_FOREACH_CHILD_STATUS_OKAY_SEP` to enumerate layers, which **skips** nodes with `status = "reserved"`. Custom layers placed before the reserved block get stable indices in both Studio and non-Studio builds. The reserved layers are appended last — Studio includes them via `DT_INST_FOREACH_CHILD_SEP`; non-Studio skips them with no effect since no binding references indices 7–10.
 
 ## Flykey Layer Concept
 
@@ -105,10 +109,11 @@ Row 3 (ASDFG): LA(↓)  LC(U)   ⌫      ⌦     LC(K)   — kill-line, backspac
 Row 4 (ZXCVB):  Esc  LG(↑)  LG(↓)   Ret    Tab     — escape, doc nav, confirm
 ```
 
-### Num layer layout
+### Edit layer layout
 
-Activated by holding the left Backspace thumb key (`&lt_b 5 BACKSPACE`). Numpad on the right hand, arithmetic operators on the outer column:
+Activated by holding left Backspace (`&lt_b 5 BACKSPACE`) or Enter (`&lt 5 ENTER`).
 
+**Right hand — numpad:**
 ```
 Right row 2 (UIOP+): 7   8   9   *
 Right row 3 (HJKL=): 4   5   6   =
@@ -116,6 +121,20 @@ Right row 4 (NM,./): 1   2   3   /
 Right inner thumb:   0
 Left outer column:   +   (Y position)   -   (H position)
 ```
+
+**Left hand — pure modifiers (home row, no dual-role):**
+```
+A=⌃  S=⌥  D=⌘  F=⇧  G=Space
+```
+
+**Left hand — edit shortcuts (bottom row):**
+```
+Z=Undo(⌘Z)  X=Cut(⌘X)  C=Copy(⌘C)  V=Paste(⌘V)  B=Redo(⌘⇧Z)
+```
+
+**Thumb — layer navigation:**
+- Left Space / Right Space → NoFly (`&to 6`)
+- Backspace → Base (`&to 0`)
 
 ### Dual-role Keys (`hm` and `hm_b` behaviors)
 
