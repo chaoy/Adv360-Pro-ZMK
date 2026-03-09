@@ -36,7 +36,7 @@ The firmware uses a **custom ZMK fork** (`github.com/ReFil/zmk`, branch `adv360-
 
 | File | Purpose |
 |------|---------|
-| `config/adv360.keymap` | Main keymap (7 layers: Base, Keypad, Function, Modifier, Flykey, Edit, NoFly) |
+| `config/adv360.keymap` | Main keymap (7 layers: Base, Keypad, Function, Modifier, Flykey, Util, NoFly) |
 | `config/macros.dtsi` | Custom ZMK behaviors and macro definitions |
 | `config/boards/arm/adv360/adv360.dtsi` | Hardware device tree (matrix, LEDs, battery, SPI) |
 | `config/boards/arm/adv360/adv360_left_defconfig` | Left half build config (NRF52840, BT, USB, RGB) |
@@ -70,7 +70,7 @@ The keymap defines 10 layers. Layer indices in ZMK bindings are zero-based:
 | 2 | `fn` | Fn | `&mo 2` (hold left/right thumb corners) |
 | 3 | `mod` | Mod | `&mo 3` (hold right upper thumb key) |
 | 4 | `flykey` | — | `&lt_b 4 SPACE` (hold left/right Space thumb key) |
-| 5 | `num` | Edit | `&lt_b 5 BACKSPACE` (hold left Backspace) or `&lt 5 ENTER` (hold Enter) |
+| 5 | `num` | Util | `&lt_b 5 BACKSPACE` (hold left Backspace) or `&lt 5 ENTER` (hold Enter) |
 | 6 | `plain` | NoFly | `&to 6` from flykey Space keys; latching layer |
 | 7 | `extra1` | Red | Reserved for ZMK Studio / Clique |
 | 8 | `extra2` | Purple | Reserved for ZMK Studio / Clique |
@@ -109,17 +109,15 @@ Row 3 (ASDFG): LA(↓)  LC(U)   ⌫      ⌦     LC(K)   — kill-line, backspac
 Row 4 (ZXCVB):  Esc  LG(↑)  LG(↓)   Ret    Tab     — escape, doc nav, confirm
 ```
 
-### Edit layer layout
+### Util layer layout
 
 Activated by holding left Backspace (`&lt_b 5 BACKSPACE`) or Enter (`&lt 5 ENTER`).
 
 **Right hand — numpad:**
 ```
-Right row 2 (UIOP+): 7   8   9   *
-Right row 3 (HJKL=): 4   5   6   =
-Right row 4 (NM,./): 1   2   3   /
-Right inner thumb:   0
-Left outer column:   +   (Y position)   -   (H position)
+Right row 2 (YUIOP): +   7   8   9   *
+Right row 3 (HJKL=): 0   4   5   6   =
+Right row 4 (NM,./): -   1   2   3   /
 ```
 
 **Left hand — pure modifiers (home row, no dual-role):**
@@ -230,21 +228,24 @@ The `hold-preferred` flavor activates the layer as soon as another key is presse
 
 ---
 
-## Session State (last updated 2026-03-08)
+## Session State (last updated 2026-03-09)
 
-### Original Goal and Current Status
+### Current Layer Names
 
-**Goal:** Fix flykey layer (was unreachable), then add two improvements: (1) easy ESC access, (2) ability to hold Space for key repeat.
-
-**Current status:** Flykey is fixed and working. Space-repeat and ESC are open; see below.
+| Index | DTS node | Display name | Activated by |
+|-------|----------|--------------|--------------|
+| 4 | `flykey` | — | `&lt_b 4 SPACE` |
+| 5 | `num` | **Util** | `&lt_b 5 BACKSPACE` or `&lt 5 ENTER` |
+| 6 | `plain` | **NoFly** | `&to 6` from flykey/util Space keys |
 
 ### Key Findings and Decisions
 
 | Finding | Decision |
 |---------|----------|
-| Root cause of flykey bug: `DT_INST_FOREACH_CHILD_STATUS_OKAY` skips `status = "reserved"` nodes, leaving flykey/num with invalid ordering entries | Workaround: moved flykey → index 4, num → index 5 (before reserved layers). **Committed and working.** |
-| `lt` built-in has no `quick_tap_ms` → holding Space never produces repeated spaces | Added custom `lt_b` (hold-preferred, no `quick_tap_ms`). Intentionally no quick-tap: adding it would swallow the flykey hold trigger immediately after typing a space-ending word. This trade-off means holding Space from rest still fires flykey, but a fast tap+hold (word + Space + hold) would also fire Space-repeat rather than flykey — a known edge case the user has not yet evaluated on hardware. |
-| ESC already exists in flykey layer (Z position, left hand, row 4) | Sufficient for now, but user wants faster access. Placement decision deferred. |
+| Root cause of flykey bug: `DT_INST_FOREACH_CHILD_STATUS_OKAY` skips `status = "reserved"` nodes | Workaround: moved flykey → index 4, util → index 5 (before reserved layers). **Committed and working.** |
+| Flykey modifier combos (`LA(LEFT)` etc.) sent wrong HID sequence on macOS — standalone modifier tap visible | Replaced all 16 flykey modifier bindings with `&macro_press/&macro_tap/&macro_release` macros. **Committed and working.** |
+| `lt` built-in has no `quick_tap_ms` → holding Space fires flykey | Added custom `lt_b` (hold-preferred, no `quick_tap_ms`). Intentionally no quick-tap to avoid swallowing the flykey hold trigger after a space-ending word. |
+| Util layer expanded beyond just numpad | Left hand: pure home-row mods (A/S/D/F=⌃/⌥/⌘/⇧, G=Space) + bottom-row shortcuts (Z-B=Undo/Cut/Copy/Paste/Redo). Right hand: numpad (+/7-9/*/0/4-6/=/−/1-3/). **Committed.** |
 | ZMK upstream patch (`zmk-fix-keymap-layer-reordering.patch`) also fixes the bug properly for Studio builds | Patch authored; can't push — proxy only authorized for `chaoy/Adv360-Pro-ZMK`, not `chaoy/zmk`. |
 
 ### Blocked / Pending Items
@@ -257,4 +258,4 @@ The `hold-preferred` flavor activates the layer as soon as another key is presse
 
 - `west.yml` still points to `ReFil/zmk` (not `chaoy/zmk`) — no build impact until the ZMK patch is needed for Studio.
 - No combos currently defined anywhere; adding one requires a new top-level `/ { combos { ... }; };` block in `adv360.keymap`.
-- `keymap.json` has not been updated to reflect the new layer ordering or `lt_b` bindings — GUI editor will be out of sync until synced.
+- `keymap.json` has not been updated to reflect the new layer ordering, `lt_b` bindings, or util layer changes — GUI editor will be out of sync until synced.
