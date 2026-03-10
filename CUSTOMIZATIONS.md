@@ -49,15 +49,20 @@ flowchart LR
 Abbreviations: `⌃` Control · `⌥` Option · `⌘` Command · `⇧` Shift
 
 ```
-   =    1    2    3    4    5                                   6    7    8    9    0    -
-  Tab   Q    W    E    R    T                                   Y    U    I    O    P    \
- `/⌃  A/⌃  S/⌥  D/⌘  F/⇧   G   [/⌥  ]/⌘       -/⌘  =/⌥   H   J/⇧  K/⌘  L/⌥  ;/⌃  '/⌃
- \/⇧   Z    X    C    V    B   Hom ┌──────────┐     ┌──────────┐ PgU  N    M    ,    .    /   //⇧
-  Fn   `   Esc   ←    →           │  Spc/Fly  │ End │ Ent/Util │          ↑    ↓    [    ]    Fn
-                                  │           │ PgDn│          │
-                                  ├───────────┤     ├──────────┤
-                                  │  Bsp/Util │     │  Spc/Fly │
-                                  └───────────┘     └──────────┘
+    =    1    2    3    4    5                            6    7    8    9    0    -
+  Tab    Q    W    E    R    T                            Y    U    I    O    P    \
+  `/⌃  A/⌃  S/⌥  D/⌘  F/⇧    G                            H  J/⇧  K/⌘  L/⌥  ;/⌃  '/⌃
+  \/⇧    Z    X    C    V    B                            N    M    ,    .    /  //⇧
+   Fn    `  Esc    ←    →                                 ↑    ↓    [    ]       Fn
+
+                                ┌─────┬─────┐   ┌─────┬─────┐
+                                │ [/⌥ │ ]/⌘ │   │ -/⌘ │ =/⌥ │
+                          ┌─────┼─────┼─────┤   ├─────┼─────┼─────┐
+                          │ Spc │ Bsp │     │   │     │ Ent │ Spc │
+                          │/Fly │/Util│ Hom │   │ PgU │/Util│/Fly │
+                          │     │     ├─────┤   ├─────┤     │     │
+                          │     │     │ End │   │ PgD │     │     │
+                          └─────┴─────┴─────┘   └─────┴─────┴─────┘
 ```
 
 - Thumb **Space** (either): tap = Space, hold = Flykey layer
@@ -65,6 +70,10 @@ Abbreviations: `⌃` Control · `⌥` Option · `⌘` Command · `⇧` Shift
 - Thumb **Enter**: tap = Enter, hold = Util layer
 - Thumb top row **[/⌥ ]/⌘** and **-/⌘ =/⌥**: tap = bracket/symbol, hold = modifier
 - **Fn** (corner keys): hold = Fn layer · **[Kp]** key: toggle Keypad layer
+
+### Thumb Cluster Layout
+
+Each thumb cluster is a 3×3 grid with one corner removed. The two inner keys are tall (span two rows). The right cluster mirrors the left.
 
 ---
 
@@ -74,16 +83,23 @@ Hold either Space key. Left hand handles text editing; right hand handles cursor
 `·` = same as Base (home-row mods still work).
 
 ```
-   ·    ·    ·    ·    ·    ·                                   ·    ·    ·    ·    ·    ·
-   ·   mv↑  ⌘⌫   ⌥⌫   ⌥⌦  ⌘⌦                                  ⌘←   ⌥←   ↑    ⌥→  ⌘→   ·
-   ·   mv↓  ^U   ⌫    ⌦   ^K    ·    ·           ·    ·     ^A   ←    ↓    →   ^E   ·
-   ·   Esc  ⌘↑   ⌘↓   ↵    ⇥    ·  ┌──────────┐     ┌──────────┐ ·   Hm  PgU  PgD  End   ·    ·
-   ·    ·    ·    ·    ·           │  →NoFly   │  ·  │    ·      │          ·    ·    ·    ·    ·
-                                  │           │  ·  │           │
-                                  ├───────────┤     ├───────────┤
-                                  │     ·     │     │  →NoFly   │
-                                  └───────────┘     └───────────┘
+    ·    ·    ·    ·    ·    ·                            ·    ·    ·    ·    ·    ·
+    ·  mv↑   ⌘⌫   ⌥⌫   ⌥⌦   ⌘⌦                          ⌘←   ⌥←    ↑   ⌥→   ⌘→    ·
+    ·  mv↓   ^U    ⌫    ⌦   ^K                           ^A    ←    ↓    →   ^E    ·
+    ·  Esc   ⌘↑   ⌘↓    ↵    ⇥                           Hm  PgU  PgD  End    ·    ·
+    ·    ·    ·    ·    ·                                 ·    ·    ·    ·         ·
+
+                                ┌─────┬─────┐   ┌─────┬─────┐
+                                │  ·  │  ·  │   │  ·  │  ·  │
+                          ┌─────┼─────┼─────┤   ├─────┼─────┼─────┐
+                          │ →NF │     │     │   │     │     │ →NF │
+                          │     │  ·  │  ·  │   │  ·  │  ·  │     │
+                          │     │     ├─────┤   ├─────┤     │     │
+                          │     │     │  ·  │   │  ·  │     │     │
+                          └─────┴─────┴─────┘   └─────┴─────┴─────┘
 ```
+
+→NF = tapping Space while held switches to NoFly layer.
 
 ### Key Reference
 
@@ -115,15 +131,20 @@ Hold either Space key. Left hand handles text editing; right hand handles cursor
 Right hand becomes a numpad. Left hand provides pure modifier keys (no letter output) and common edit shortcuts.
 
 ```
-   ·    ·    ·    ·    ·    ·                                   ·    ·    ·    ·    ·    ·
-   ·    ·    ·    ·    ·    ·                                   ·    +    7    8    9    *    ·
-   ·    ⌃    ⌥    ⌘    ⇧   Spc   ·    ·           ·    ·     0    4    5    6    =    ·
-   ·   Und  Cut  Cpy  Pst  Rdo   ·  ┌──────────┐     ┌──────────┐ ·   -    1    2    3    /    ·
-   ·    ·    ·    ·    ·           │  →NoFly   │  ·  │    ·      │          ·    ·    ·    ·    ·
-                                  │           │  ·  │           │
-                                  ├───────────┤     ├───────────┤
-                                  │   →Base   │     │  →NoFly   │
-                                  └───────────┘     └───────────┘
+    ·    ·    ·    ·    ·    ·                            ·    ·    ·    ·    ·    ·
+    ·    ·    ·    ·    ·    ·                            +    7    8    9    *    ·
+    ·    ⌃    ⌥    ⌘    ⇧  Spc                            0    4    5    6    =    ·
+    ·  Und  Cut  Cpy  Pst  Rdo                            -    1    2    3    /    ·
+    ·    ·    ·    ·    ·                                 ·    ·    ·    ·         ·
+
+                                ┌─────┬─────┐   ┌─────┬─────┐
+                                │  ·  │  ·  │   │  ·  │  ·  │
+                          ┌─────┼─────┼─────┤   ├─────┼─────┼─────┐
+                          │ →NF │→Bas │     │   │     │     │ →NF │
+                          │     │  e  │  ·  │   │  ·  │  ·  │     │
+                          │     │     ├─────┤   ├─────┤     │     │
+                          │     │     │  ·  │   │  ·  │     │     │
+                          └─────┴─────┴─────┘   └─────┴─────┴─────┘
 ```
 
 - Left **Backspace** (while in Util): `&to 0` — returns to Base even from NoFly context
@@ -160,16 +181,20 @@ Right hand becomes a numpad. Left hand provides pure modifier keys (no letter ou
 **How to enter:** While holding Space (Flykey active), tap Space again, then release both.
 
 ```
-   ·    ·    ·    ·    ·    ·                                   ·    ·    ·    ·    ·    ·
-   ·    ·    ·    ·    ·    ·                                   ·    ·    ·    ·    ·    ·
-   ⌃   A/⌃  S/⌥  D/⌘  F/⇧   ·    ⌥    ⌘           ⌥    ⌘    ·   J/⇧  K/⌘  L/⌥  ;/⌃   '
-   ⇧    ·    ·    ·    ·    ·    ·  ┌──────────┐     ┌──────────┐ ·    ·    ·    ·    ·    ⇧
-   ·    ·    ·    ·    ·           │   Space   │  ·  │    ·      │          ·    ·    ·    ·    ·
-                                  │  (plain)  │  ·  │           │
-                                  ├───────────┤     ├───────────┤
-                                  │     ·     │     │   Space   │
-                                  │           │     │  (plain)  │
-                                  └───────────┘     └───────────┘
+    ·    ·    ·    ·    ·    ·                            ·    ·    ·    ·    ·    ·
+    ·    ·    ·    ·    ·    ·                            ·    ·    ·    ·    ·    ·
+    ⌃  A/⌃  S/⌥  D/⌘  F/⇧    ·                            ·  J/⇧  K/⌘  L/⌥  ;/⌃    '
+    ⇧    ·    ·    ·    ·    ·                            ·    ·    ·    ·    ·    ⇧
+    ·    ·    ·    ·    ·                                 ·    ·    ·    ·         ·
+
+                                ┌─────┬─────┐   ┌─────┬─────┐
+                                │  ⌥  │  ⌘  │   │  ⌥  │  ⌘  │
+                          ┌─────┼─────┼─────┤   ├─────┼─────┼─────┐
+                          │ Spc │     │     │   │     │     │ Spc │
+                          │     │  ·  │  ·  │   │  ·  │  ·  │     │
+                          │     │     ├─────┤   ├─────┤     │     │
+                          │     │     │  ·  │   │  ·  │     │     │
+                          └─────┴─────┴─────┘   └─────┴─────┴─────┘
 ```
 
 **Key differences from Base:**
