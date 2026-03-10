@@ -7,11 +7,13 @@ How to use the modified Kinesis Advantage 360 Pro firmware.
 | Customization | How to use |
 |---|---|
 | **Flykey layer** | Hold either Space key — home-row navigation and editing |
-| **Util layer** | Hold left Backspace or Enter — numpad + mods + edit shortcuts |
-| **NoFly layer** | Press Space while in Flykey — disables accidental layer-hops |
-| **Home-row mods** | Hold any home-row key ≥200 ms to send a modifier |
+| **Util layer** | Hold left Backspace or Enter — numpad + pure mods + edit shortcuts |
+| **NoFly layer** | Tap Space while in Flykey — Space no longer activates Flykey; exit by holding Backspace then tapping it |
+| **Home-row mods** | Hold A/S/D/F (left) or J/K/L/; (right) in Base for ⌃/⌥/⌘/⇧ |
 | **Caps Lock → Esc** | Caps Lock sends Escape |
-| **Q+W → Esc** | Simultaneous Q+W (within 50 ms) sends Escape |
+| **Q+W → Esc** | Simultaneous Q+W sends Escape |
+
+Home-row mods are a Base layer feature and continue to work in NoFly.
 
 ---
 
@@ -24,71 +26,63 @@ flowchart LR
     U([Util<br/>layer 5])
     N([NoFly<br/>layer 6])
 
-    B -->|"Hold Space (either)"| F
+    B -->|"Hold Space"| F
     F -->|"Release Space"| B
-    F -->|"Press Space while held"| N
-    N -->|"Press Space or any layer key"| B
+    F -->|"Tap Space while holding"| N
 
-    B -->|"Hold left Backspace"| U
-    B -->|"Hold Enter"| U
-    U -->|"Release Backspace / Enter"| B
-    U -->|"Press Backspace"| B
-    U -->|"Press Space (either)"| N
+    B -->|"Hold Bsp or Enter"| U
+    U -->|"Release Bsp/Enter"| B
+    U -->|"Tap Bsp"| B
+
+    N -->|"Hold Bsp or Enter"| U
 ```
 
-**Momentary layers** (Flykey, Util) are active only while you hold the key — release to return.
-**NoFly** is a latching layer: hold Space → tap Space → release Space. You stay in NoFly until you press Space or a layer key.
+**Momentary layers** (Flykey, Util) are active only while you hold the activation key.
+**NoFly** latches on: hold Space → tap Space → release. It stays active until you exit.
+**Exiting NoFly**: hold Backspace (Util activates on top of NoFly) → tap Backspace (`&to 0` fires) → release. The Util layer acts as a bridge back to Base.
 
 ---
 
 ## Base Layer
 
-`key/MOD` = tap for the key, hold ≥200 ms for the modifier.
+`key/MOD` = tap for the key, hold for the modifier.
 Abbreviations: `⌃` Control · `⌥` Option · `⌘` Command · `⇧` Shift
 
 ```
- ←────────────── Left half ──────────────→   ←─────────────── Right half ──────────────→
-
-  =    1    2    3    4    5   [Kp]          [Mo]   6    7    8    9    0    -
- Tab   Q    W    E    R    T                         Y    U    I    O    P    \
-`/⌃  A/⌃  S/⌥  D/⌘  F/⇧   G   [/⌥  ]/⌘    -/⌘  =/⌥   H   J/⇧  K/⌘  L/⌥  ;/⌃  '/⌃
-\/⇧   Z    X    C    V    B   Hom           PgU      N    M    ,    .    /   //⇧
-  Fn   `   Esc   ←    →                                   ↑    ↓    [    ]    Fn
+   =    1    2    3    4    5                                   6    7    8    9    0    -
+  Tab   Q    W    E    R    T                                   Y    U    I    O    P    \
+ `/⌃  A/⌃  S/⌥  D/⌘  F/⇧   G   [/⌥  ]/⌘       -/⌘  =/⌥   H   J/⇧  K/⌘  L/⌥  ;/⌃  '/⌃
+ \/⇧   Z    X    C    V    B   Hom ┌──────────┐     ┌──────────┐ PgU  N    M    ,    .    /   //⇧
+  Fn   `   Esc   ←    →           │  Spc/Fly  │ End │ Ent/Util │          ↑    ↓    [    ]    Fn
+                                  │           │ PgDn│          │
+                                  ├───────────┤     ├──────────┤
+                                  │  Bsp/Util │     │  Spc/Fly │
+                                  └───────────┘     └──────────┘
 ```
 
-```
-                    ┌────────────┬────────────┐         ┌────────────┬────────────┐
-                    │  Spc/Fly   │  Bsp/Util  │  End    │  Ent/Util  │  Spc/Fly   │
-                    └────────────┴────────────┘  PgDn   └────────────┴────────────┘
-```
-
-Thumb Space (either): **tap** = Space, **hold** = Flykey layer.
-Left Backspace: **tap** = Backspace, **hold** = Util layer.
-Enter: **tap** = Enter, **hold** = Util layer.
-`[Kp]` toggles Keypad layer. `[Mo]` holds Mod layer (Bluetooth, RGB, etc.).
-`Fn` corner keys: hold = Fn layer.
+- Thumb **Space** (either): tap = Space, hold = Flykey layer
+- Thumb **Backspace**: tap = Backspace, hold = Util layer
+- Thumb **Enter**: tap = Enter, hold = Util layer
+- Thumb top row **[/⌥ ]/⌘** and **-/⌘ =/⌥**: tap = bracket/symbol, hold = modifier
+- **Fn** (corner keys): hold = Fn layer · **[Kp]** key: toggle Keypad layer
 
 ---
 
 ## Flykey Layer — Hold Space
 
 Hold either Space key. Left hand handles text editing; right hand handles cursor movement.
-`·` = passes through to Base (home-row mods still work).
+`·` = same as Base (home-row mods still work).
 
 ```
- ←────────────── Left half ──────────────→   ←─────────────── Right half ──────────────→
-
-  ·    ·    ·    ·    ·    ·    ·             ·      ·    ·    ·    ·    ·    ·
-  ·   mv↑  ⌘⌫   ⌥⌫   ⌥⌦  ⌘⌦   ·                     ·   ⌘←   ⌥←   ↑    ⌥→  ⌘→   ·
-  ·   mv↓  ^U   ⌫    ⌦   ^K    ·    ·         ·    ·   ·   ^A   ←    ↓    →   ^E   ·
-  ·   Esc  ⌘↑   ⌘↓   ↵    ⇥    ·              ·      ·   Hm  PgU  PgD  End   ·    ·
-  ·    ·    ·    ·    ·                                   ·    ·    ·    ·    ·
-```
-
-```
-                    ┌────────────┬────────────┐         ┌────────────┬────────────┐
-                    │  →NoFly    │      ·      │   ·    │      ·      │  →NoFly    │
-                    └────────────┴────────────┘    ·   └────────────┴────────────┘
+   ·    ·    ·    ·    ·    ·                                   ·    ·    ·    ·    ·    ·
+   ·   mv↑  ⌘⌫   ⌥⌫   ⌥⌦  ⌘⌦                                  ⌘←   ⌥←   ↑    ⌥→  ⌘→   ·
+   ·   mv↓  ^U   ⌫    ⌦   ^K    ·    ·           ·    ·     ^A   ←    ↓    →   ^E   ·
+   ·   Esc  ⌘↑   ⌘↓   ↵    ⇥    ·  ┌──────────┐     ┌──────────┐ ·   Hm  PgU  PgD  End   ·    ·
+   ·    ·    ·    ·    ·           │  →NoFly   │  ·  │    ·      │          ·    ·    ·    ·    ·
+                                  │           │  ·  │           │
+                                  ├───────────┤     ├───────────┤
+                                  │     ·     │     │  →NoFly   │
+                                  └───────────┘     └───────────┘
 ```
 
 ### Key Reference
@@ -111,30 +105,29 @@ Hold either Space key. Left hand handles text editing; right hand handles cursor
 | X | Doc top ⌘↑ | . | End |
 | C | Doc bottom ⌘↓ | | |
 
-> **Line start/end:** Use `H`/`;` (^A/^E) in terminal and Emacs — these also work in macOS native text fields.
-> Use `Y`/`P` (⌘←/⌘→) in GUI apps like browsers and editors.
+> **Line start/end:** H/; (^A/^E) work in terminal, Emacs, and macOS native text fields.
+> Y/P (⌘←/⌘→) work in GUI apps like browsers and text editors.
 
 ---
 
 ## Util Layer — Hold Left Backspace or Enter
 
-Right hand becomes a numpad. Left hand provides pure modifier keys (no letter output, no tap delay) and common edit shortcuts.
+Right hand becomes a numpad. Left hand provides pure modifier keys (no letter output) and common edit shortcuts.
 
 ```
- ←────────────── Left half ──────────────→   ←─────────────── Right half ──────────────→
-
-  ·    ·    ·    ·    ·    ·    ·             ·      ·    +    7    8    9    *    ·
-  ·    ·    ·    ·    ·    ·    ·                     ·    0    4    5    6    =    ·
-  ·    ⌃    ⌥    ⌘    ⇧   Spc   ·    ·         ·    ·   ·    -    1    2    3    /    ·
-  ·   Und  Cut  Cpy  Pst  Rdo   ·              ·      ·    ·    ·    ·    ·    ·    ·
-  ·    ·    ·    ·    ·                                   ·    ·    ·    ·    ·
+   ·    ·    ·    ·    ·    ·                                   ·    ·    ·    ·    ·    ·
+   ·    ·    ·    ·    ·    ·                                   ·    +    7    8    9    *    ·
+   ·    ⌃    ⌥    ⌘    ⇧   Spc   ·    ·           ·    ·     0    4    5    6    =    ·
+   ·   Und  Cut  Cpy  Pst  Rdo   ·  ┌──────────┐     ┌──────────┐ ·   -    1    2    3    /    ·
+   ·    ·    ·    ·    ·           │  →NoFly   │  ·  │    ·      │          ·    ·    ·    ·    ·
+                                  │           │  ·  │           │
+                                  ├───────────┤     ├───────────┤
+                                  │   →Base   │     │  →NoFly   │
+                                  └───────────┘     └───────────┘
 ```
 
-```
-                    ┌────────────┬────────────┐         ┌────────────┬────────────┐
-                    │  →NoFly    │  →Base      │   ·    │      ·      │  →NoFly    │
-                    └────────────┴────────────┘    ·   └────────────┴────────────┘
-```
+- Left **Backspace** (while in Util): `&to 0` — returns to Base even from NoFly context
+- Left **Space** / Right **Space**: switch to NoFly layer
 
 ### Key Reference
 
@@ -156,39 +149,34 @@ Right hand becomes a numpad. Left hand provides pure modifier keys (no letter ou
 | V | Paste ⌘V | . | 3 |
 | B | Redo ⌘⇧Z | / | / |
 
-**Thumb while in Util:**
-- Left Space / Right Space → NoFly layer
-- Backspace → back to Base (`&to 0`, exits even without releasing hold key)
-
-**Using Util for tap-modifier patterns:** Activate Util (hold Bsp or Enter), then tap A/S/D/F to send a bare modifier keydown. Useful for apps that need tap-⌘ or tap-⌥ without a following character.
+**Using left-hand mods for tap-modifier patterns:** In Util, A/S/D/F send the modifier key alone — useful for apps that respond to a bare tap of ⌘ or ⌥ without a following character.
 
 ---
 
 ## NoFly Layer — Tap Space while in Flykey
 
-**Problem it solves:** Fast typing sometimes briefly activates Flykey when reaching for the next key while Space is still down, sending a navigation command instead of a space.
+**Problem it solves:** Fast typing sometimes briefly activates Flykey when the next key is pressed before Space is fully released, sending a navigation command instead of a character.
 
-**How to enter:** While holding Space (Flykey active), tap and release Space. Flykey deactivates; NoFly latches on.
-
-```
- ←────────────── Left half ──────────────→   ←─────────────── Right half ──────────────→
-
-  ·    ·    ·    ·    ·    ·    ·             ·      ·    ·    ·    ·    ·    ·
-  ·    ·    ·    ·    ·    ·                          ·    ·    ·    ·    ·    ·
-  ·   A/⌃  S/⌥  D/⌘  F/⇧   ·    ·    ·         ·    ·   ·   J/⇧  K/⌘  L/⌥  ;/⌃   ·
-  ·    ·    ·    ·    ·    ·    ·              ·      ·    ·    ·    ·    ·    ·
-  ·    ·    ·    ·    ·                                   ·    ·    ·    ·    ·
-```
+**How to enter:** While holding Space (Flykey active), tap Space again, then release both.
 
 ```
-                    ┌────────────┬────────────┐         ┌────────────┬────────────┐
-                    │   Space    │      ·      │   ·    │      ·      │   Space    │
-                    └────────────┴────────────┘    ·   └────────────┴────────────┘
+   ·    ·    ·    ·    ·    ·                                   ·    ·    ·    ·    ·    ·
+   ·    ·    ·    ·    ·    ·                                   ·    ·    ·    ·    ·    ·
+   ⌃   A/⌃  S/⌥  D/⌘  F/⇧   ·    ⌥    ⌘           ⌥    ⌘    ·   J/⇧  K/⌘  L/⌥  ;/⌃   '
+   ⇧    ·    ·    ·    ·    ·    ·  ┌──────────┐     ┌──────────┐ ·    ·    ·    ·    ·    ⇧
+   ·    ·    ·    ·    ·           │   Space   │  ·  │    ·      │          ·    ·    ·    ·    ·
+                                  │  (plain)  │  ·  │           │
+                                  ├───────────┤     ├───────────┤
+                                  │     ·     │     │   Space   │
+                                  │           │     │  (plain)  │
+                                  └───────────┘     └───────────┘
 ```
 
 **Key differences from Base:**
-- Space keys send plain Space — **no Flykey activation**.
-- Home-row mods (A/S/D/F/J/K/L/;) work unchanged.
-- Outer columns (outer-left `` `/⌃ ``, outer-right `'/⌃`, `` \/⇧ ``, `` //⇧ ``) pass through to Base.
+- **Space** keys: plain Space — no Flykey activation.
+- **Home-row mods** A/S/D/F/J/K/L/;: unchanged — still dual-role tap/hold.
+- **Outer columns**: tap/hold dual-role removed; keys send only their modifier or character directly (e.g., outer-left sends ⌃ on any press, not tap-`/hold-⌃).
+- **Thumb top row** [/⌥ ]/⌘ etc.: similarly send the modifier directly.
+- **Outer shift column** (\/⇧ and //⇧): send ⇧ directly.
 
-**How to leave:** Press either Space or any layer key (Fn, Kp, etc.).
+**How to exit:** Hold Backspace (Util activates momentarily) → tap Backspace while holding → release. The `&to 0` in Util restores Base. Enter works the same way as Backspace for the initial hold.
