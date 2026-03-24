@@ -136,12 +136,12 @@ Z=Undo(⌘Z)  X=Cut(⌘X)  C=Copy(⌘C)  V=Paste(⌘V)  B=Redo(⌘⇧Z)
 
 ### Dual-role Keys (`hm` and `hm_b` behaviors)
 
-Two hold-tap behaviors are used for dual-role keys, both with `tapping-term-ms = 200` and `quick_tap_ms = 175`:
+Two hold-tap behaviors are used for dual-role keys:
 
-- **`hm`** (`tap-preferred`) — for home-row mods and top thumb cluster. Tap registers if released before timeout or if another key is pressed and released within the window. Best for fast typing on frequently-used keys.
-- **`hm_b`** (`balanced`) — for outer edge keys (pinky ctrl columns, shift columns). Hold triggers when another key is pressed **and released** while the key is still held, even before timeout. Better for keys that are naturally held while typing another key.
+- **`hm`** (`balanced`, `tapping-term-ms = 280`, `quick_tap_ms = 175`, `require-prior-idle-ms = 150`) — "timeless HRM" pattern for home-row mods only. Hold triggers when another key is pressed **and released** while held. The `require-prior-idle-ms` guard prevents accidental mod triggers during fast typing by treating the key as a pure tap if any key was pressed within 150ms before it.
+- **`hm_hp`** (`hold-preferred`, `tapping-term-ms = 200`, `quick_tap_ms = 175`) — for outer edge keys (pinky ctrl, shift columns) and top thumb cluster. Hold triggers as soon as ANY other key is pressed, even before release. Best for dedicated modifier positions where hold behavior should dominate.
 
-**Home row (uses `hm` — tap-preferred):**
+**Home row (uses `hm` — balanced + idle guard):**
 
 | Physical key | Tap | Hold |
 |---|---|---|
@@ -154,21 +154,22 @@ Two hold-tap behaviors are used for dual-role keys, both with `tapping-term-ms =
 | L | L | Right Alt |
 | ; | ; | Right Control |
 
-**Outer pinky column (uses `hm_b` — balanced):**
+**Outer pinky column (uses `hm_hp` — hold-preferred):**
 
 | Physical key | Tap | Hold |
 |---|---|---|
 | Left of A (outer pinky) | `` ` `` / `~` | Left Control |
-| Right of ; (outer pinky) | `'` / `"` | Right Control |
 
-**Outer shift column (uses `hm_b` — balanced):**
+**Right of ; (outer pinky):** Plain `&kp SQT` — no dual-role.
+
+**Outer shift column (uses `hm_hp` — hold-preferred):**
 
 | Physical key | Tap | Hold |
 |---|---|---|
 | Left of Z | `\` / `\|` | Left Shift |
 | Right of / | `/` / `?` | Right Shift |
 
-**Top thumb cluster (uses `hm` — tap-preferred):**
+**Top thumb cluster (uses `hm_hp` — hold-preferred):**
 
 | Physical key | Tap | Hold |
 |---|---|---|
@@ -177,7 +178,7 @@ Two hold-tap behaviors are used for dual-role keys, both with `tapping-term-ms =
 | Right thumb inner (pos 37) | `-` / `_` | Right Command |
 | Right thumb outer (pos 38) | `=` / `+` | Right Alt |
 
-To tune timing: adjust `tapping-term-ms` (increase for slower typists) or `quick_tap_ms` in the behavior definitions in `adv360.keymap`. The `hm` and `hm_b` behaviors can be tuned independently.
+To tune home-row mods: adjust `require-prior-idle-ms` (increase to reduce accidental mods, decrease for faster activation after typing), `tapping-term-ms`, or `quick_tap_ms` in the `hm` behavior definition in `adv360.keymap`. For outer/thumb keys: tune the `hm_hp` behavior independently.
 
 ## Guidelines for Modifying the Keymap
 
@@ -205,7 +206,7 @@ The flykey layout is intentionally symmetric around macOS shortcut conventions:
 
 ### Homerow mods tuning
 
-If homerow mods cause accidental modifier triggers, adjust `tapping-term-ms` (increase for slower typists) or `quick_tap_ms` in the `hm` behavior definition in `adv360.keymap`. Do **not** change `flavor` from `tap-preferred` without testing — other flavors (`hold-preferred`, `balanced`) interact differently with fast typing.
+The `hm` behavior uses the "timeless HRM" pattern (`balanced` + `require-prior-idle-ms = <150>`). If accidental mods occur during fast typing, increase `require-prior-idle-ms` (try 175 or 200). If mods feel sluggish after a typing pause, decrease it (try 125 or 100). The `hm_hp` behavior uses `hold-preferred` for dedicated modifier keys — if it triggers hold too eagerly, consider switching it to `balanced`.
 
 ### `lt_b` (layer-tap) on thumb keys
 
@@ -228,7 +229,7 @@ The `hold-preferred` flavor activates the layer as soon as another key is presse
 
 ---
 
-## Session State (last updated 2026-03-09)
+## Session State (last updated 2026-03-24)
 
 ### Current Layer Names
 
@@ -236,7 +237,7 @@ The `hold-preferred` flavor activates the layer as soon as another key is presse
 |-------|----------|--------------|--------------|
 | 4 | `flykey` | — | `&lt_b 4 SPACE` |
 | 5 | `num` | **Util** | `&lt_b 5 BACKSPACE` or `&lt 5 ENTER` |
-| 6 | `plain` | **NoFly** | `&to 6` from flykey/util Space keys |
+| 6 | `plain` | **NoFly** | `&to 6` from flykey Backspace/Enter thumb keys |
 
 ### Key Findings and Decisions
 
@@ -247,15 +248,17 @@ The `hold-preferred` flavor activates the layer as soon as another key is presse
 | `lt` built-in has no `quick_tap_ms` → holding Space fires flykey | Added custom `lt_b` (hold-preferred, no `quick_tap_ms`). Intentionally no quick-tap to avoid swallowing the flykey hold trigger after a space-ending word. |
 | Util layer expanded beyond just numpad | Left hand: pure home-row mods (A/S/D/F=⌃/⌥/⌘/⇧, G=Space) + bottom-row shortcuts (Z-B=Undo/Cut/Copy/Paste/Redo). Right hand: numpad (+/7-9/*/0/4-6/=/−/1-3/). **Committed.** |
 | ZMK upstream patch (`zmk-fix-keymap-layer-reordering.patch`) also fixes the bug properly for Studio builds | Patch authored; can't push — proxy only authorized for `chaoy/Adv360-Pro-ZMK`, not `chaoy/zmk`. |
+| NoFly accidental activation during thumb switching in flykey | Moved `&to 6` from Space keys to Backspace/Enter thumb keys in flykey layer. Space keys now `&trans` (pass-through to `&lt_b 4 SPACE`). **Committed.** |
+| Home-row mods hard to trigger as modifiers | `hm` switched to balanced + `require-prior-idle-ms=150` ("timeless HRM"). Outer/thumb keys: `hm_b` renamed to `hm_hp` (hold-preferred). Right quote key (`'`) now plain `&kp SQT`. **Committed.** |
 
 ### Blocked / Pending Items
 
-- **ESC placement** — user deferred choice. Options: GRAVE key (tap = ESC, GRAVE moves to flykey/fn), J+K combo (positions 41+42), Q+W combo (positions 15+16). Implement once confirmed.
+- **ESC placement** — Q+W combo (positions 15+16) implemented with 50ms timeout. Other options were deferred.
 - **ZMK fork patch** (`chaoy/zmk`, branch `adv360-z3.5-2`) — blocked; no proxy access to that repo. User must manually apply `zmk-fix-keymap-layer-reordering.patch` (steps in `/root/.claude/plans/parsed-growing-lampson.md`). After that, update `config/west.yml` to point at the fork.
 - **Space-repeat evaluation** — user needs to test on hardware whether the current `lt_b` (hold-preferred, no `quick_tap_ms`) meets needs or whether adding `quick_tap_ms = <175>` is acceptable despite the edge-case conflict with flykey-after-space.
 
 ### Side Investigations
 
 - `west.yml` still points to `ReFil/zmk` (not `chaoy/zmk`) — no build impact until the ZMK patch is needed for Studio.
-- No combos currently defined anywhere; adding one requires a new top-level `/ { combos { ... }; };` block in `adv360.keymap`.
+- Q+W combo for ESC defined (positions 15+16, 50ms timeout).
 - `keymap.json` has not been updated to reflect the new layer ordering, `lt_b` bindings, or util layer changes — GUI editor will be out of sync until synced.
