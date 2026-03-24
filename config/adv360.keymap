@@ -15,19 +15,20 @@
           compatible = "zmk,behavior-hold-tap";
           label = "HOMEROW_MODS";
           #binding-cells = <2>;
-          tapping-term-ms = <200>;
+          tapping-term-ms = <280>;
           quick_tap_ms = <175>;
-          flavor = "tap-preferred";
+          require-prior-idle-ms = <150>;
+          flavor = "balanced";
           bindings = <&kp>, <&kp>;
       };
 
-      hm_b: homerow_mods_balanced {
+      hm_hp: homerow_mods_hold_preferred {
           compatible = "zmk,behavior-hold-tap";
-          label = "HOMEROW_MODS_BALANCED";
+          label = "HOMEROW_MODS_HOLD_PREFERRED";
           #binding-cells = <2>;
           tapping-term-ms = <200>;
           quick_tap_ms = <175>;
-          flavor = "balanced";
+          flavor = "hold-preferred";
           bindings = <&kp>, <&kp>;
       };
 
@@ -49,8 +50,8 @@
       bindings = <
         &kp EQUAL         &kp N1              &kp N2          &kp N3              &kp N4            &kp N5  &tog 1                                                                                                   &mo 3        &kp N6  &kp N7             &kp N8               &kp N9           &kp N0                  &kp MINUS
         &kp TAB           &kp Q               &kp W           &kp E               &kp R             &kp T   &none                                                                                                    &none        &kp Y   &kp U              &kp I                &kp O            &kp P                   &kp BSLH
-        &hm_b LEFT_CONTROL GRAVE  &hm LEFT_CONTROL A  &hm LEFT_ALT S  &hm LEFT_COMMAND D  &hm LEFT_SHIFT F  &kp G   &none        &hm LEFT_ALT LBKT  &hm LEFT_COMMAND RBKT      &hm RIGHT_COMMAND MINUS  &hm RIGHT_ALT EQUAL  &none        &kp H   &hm RIGHT_SHIFT J  &hm RIGHT_COMMAND K  &hm RIGHT_ALT L  &hm RIGHT_CONTROL SEMI  &hm_b RIGHT_CONTROL SQT
-        &hm_b LEFT_SHIFT BSLH  &kp Z               &kp X           &kp C               &kp V             &kp B                                   &kp HOME                   &kp PG_UP                                                  &kp N   &kp M              &kp COMMA            &kp DOT          &kp FSLH                &hm_b RIGHT_SHIFT FSLH
+        &hm_hp LEFT_CONTROL GRAVE  &hm LEFT_CONTROL A  &hm LEFT_ALT S  &hm LEFT_COMMAND D  &hm LEFT_SHIFT F  &kp G   &none        &hm_hp LEFT_ALT LBKT  &hm_hp LEFT_COMMAND RBKT      &hm_hp RIGHT_COMMAND MINUS  &hm_hp RIGHT_ALT EQUAL  &none        &kp H   &hm RIGHT_SHIFT J  &hm RIGHT_COMMAND K  &hm RIGHT_ALT L  &hm RIGHT_CONTROL SEMI  &kp SQT
+        &hm_hp LEFT_SHIFT BSLH  &kp Z               &kp X           &kp C               &kp V             &kp B                                   &kp HOME                   &kp PG_UP                                                  &kp N   &kp M              &kp COMMA            &kp DOT          &kp FSLH                &hm_hp RIGHT_SHIFT FSLH
         &mo 2             &kp GRAVE           &kp ESC         &kp LEFT            &kp RIGHT                 &lt_b 4 SPACE  &lt_b 5 BACKSPACE    &kp END                    &kp PG_DN                &lt 5 ENTER          &lt_b 4 SPACE          &kp UP             &kp DOWN             &kp LBKT         &kp RBKT                &mo 2
       >;
     };
@@ -94,7 +95,7 @@
         &trans  &fk_mv_ln_up  &fk_del_ln_l       &fk_del_wd_l       &fk_del_wd_r    &fk_del_ln_r    &trans                                      &trans  &fk_ln_home   &fk_wd_left   &kp UP     &fk_wd_right   &fk_ln_end     &trans
         &trans  &fk_mv_ln_dn  &fk_kill_l         &kp BSPC           &kp DELETE      &fk_kill_r      &trans  &trans  &trans      &trans  &trans  &trans  &fk_bol       &kp LEFT      &kp DOWN   &kp RIGHT      &fk_eol        &trans
         &trans  &kp ESC       &fk_doc_top        &fk_doc_bot        &kp RET         &kp TAB                         &trans      &trans                  &kp HOME      &kp PG_UP     &kp PG_DN  &kp END        &trans         &trans
-        &trans  &trans        &trans             &trans             &trans                          &to 6   &trans  &trans      &trans  &trans  &to 6                 &trans        &trans     &trans         &trans         &trans
+        &trans  &trans        &trans             &trans             &trans                          &trans  &to 6   &trans      &trans  &to 6   &trans                &trans        &trans     &trans         &trans         &trans
       >;
     };
 
@@ -105,7 +106,7 @@
         &trans  &trans     &trans   &trans    &trans     &trans  &trans                                      &trans  &kp PLUS   &kp N7  &kp N8  &kp N9  &kp STAR   &trans
         &trans  &kp LCTRL  &kp LALT &kp LGUI  &kp LSHFT  &kp SPACE  &trans  &trans  &trans      &trans  &trans  &trans  &kp N0     &kp N4  &kp N5  &kp N6  &kp EQUAL  &trans
         &trans  &ed_undo   &ed_cut  &ed_copy  &ed_paste  &ed_redo                &trans      &trans                  &kp MINUS  &kp N1  &kp N2  &kp N3  &kp FSLH   &trans
-        &trans  &trans     &trans   &trans    &trans             &to 6   &to 0   &trans      &trans  &trans  &to 6              &trans  &trans  &trans  &trans     &trans
+        &trans  &trans     &trans   &trans    &trans             &trans  &to 0   &trans      &trans  &trans  &trans             &trans  &trans  &trans  &trans     &trans
       >;
     };
 
@@ -114,7 +115,7 @@
       bindings = <
         &trans            &trans  &trans  &trans  &trans  &trans  &trans                                                                                                                               &trans  &trans  &trans            &trans           &trans  &trans            &trans
         &trans            &trans  &trans  &trans  &trans  &trans  &trans                                                                                                                               &trans  &trans  &trans            &trans           &trans  &trans            &trans
-        &kp LEFT_CONTROL  &trans  &trans  &trans  &trans  &trans  &trans  &kp LEFT_ALT  &kp LEFT_COMMAND  &kp RIGHT_ALT  &kp RIGHT_COMMAND  &trans  &trans  &trans  &trans  &trans  &trans            &kp SQT
+        &kp LEFT_CONTROL  &trans  &trans  &trans  &trans  &trans  &trans  &kp LEFT_ALT  &kp LEFT_COMMAND  &kp RIGHT_ALT  &kp RIGHT_COMMAND  &trans  &trans  &trans  &trans  &trans  &trans            &trans
         &kp LEFT_SHIFT    &trans  &trans  &trans  &trans  &trans                         &trans             &trans                                    &trans  &trans  &trans  &trans  &trans            &kp RIGHT_SHIFT
         &trans  &trans  &trans  &trans  &trans          &kp SPACE  &trans  &trans  &trans  &trans          &kp SPACE  &trans  &trans  &trans  &trans  &trans
       >;
