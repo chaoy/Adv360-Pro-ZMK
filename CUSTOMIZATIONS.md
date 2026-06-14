@@ -8,9 +8,9 @@ How to use the modified Kinesis Advantage 360 Pro firmware.
 |---|---|
 | **Flykey layer** | Hold either Space key — home-row navigation and editing |
 | **Util layer** | Hold left Backspace or Enter — numpad + pure mods + edit shortcuts |
-| **NoFly layer** | Tap Space while in Flykey — Space no longer activates Flykey; exit by holding Backspace then tapping it |
+| **NoFly layer** | Hold **right** Space, tap **left** Space — Space no longer activates Flykey; exit by holding either Backspace/Enter and tapping the other |
 | **Home-row mods** | Hold A/S/D/F (left) or J/K/L/; (right) in Base for ⌃/⌥/⌘/⇧ |
-| **Caps Lock → Esc** | Caps Lock sends Escape |
+| **Esc / Caps Lock** | Bottom-row left two keys (next to ←) send Esc and Caps Lock |
 | **Q+W → Esc** | Simultaneous Q+W sends Escape |
 
 Home-row mods are a Base layer feature and continue to work in NoFly.
@@ -28,18 +28,18 @@ flowchart LR
 
     B -->|"Hold Space"| F
     F -->|"Release Space"| B
-    F -->|"Tap Space while holding"| N
+    F -->|"Hold right Space, tap left Space"| N
 
     B -->|"Hold Bsp or Enter"| U
     U -->|"Release Bsp/Enter"| B
-    U -->|"Tap Bsp"| B
+    U -->|"Tap Bsp/Enter"| B
 
     N -->|"Hold Bsp or Enter"| U
 ```
 
 **Momentary layers** (Flykey, Util) are active only while you hold the activation key.
-**NoFly** latches on: hold Space → tap Space → release. It stays active until you exit.
-**Exiting NoFly**: hold Backspace (Util activates on top of NoFly) → tap Backspace (`&to 0` fires) → release. The Util layer acts as a bridge back to Base.
+**NoFly** latches on: hold the right Space (Flykey active) → tap the left Space → release. It stays active until you exit. You can't hold and tap the same thumb, so this gesture can't fire by accident while one Space is simply held down.
+**Exiting NoFly**: hold one of the two big thumb keys (left Backspace or right Enter) — Util activates on top of NoFly — then tap the other (`&to 0` fires) → release. The Util layer acts as a bridge back to Base, and the gesture works in either direction.
 
 ---
 
@@ -53,7 +53,7 @@ Abbreviations: `⌃` Control · `⌥` Option · `⌘` Command · `⇧` Shift
   Tab    Q    W    E    R    T                            Y    U    I    O    P    \
   `/⌃  A/⌃  S/⌥  D/⌘  F/⇧    G                            H  J/⇧  K/⌘  L/⌥  ;/⌃  '/⌃
   \/⇧    Z    X    C    V    B                            N    M    ,    .    /  //⇧
-   Fn    `  Esc    ←    →                                 ↑    ↓    [    ]       Fn
+   Fn  Esc  Cap    ←    →                                 ↑    ↓    [    ]       Fn
 
                                 ┌─────┬─────┐   ┌─────┬─────┐
                                 │ [/⌥ │ ]/⌘ │   │ -/⌘ │ =/⌥ │
@@ -92,14 +92,14 @@ Hold either Space key. Left hand handles text editing; right hand handles cursor
                                 ┌─────┬─────┐   ┌─────┬─────┐
                                 │  ·  │  ·  │   │  ·  │  ·  │
                           ┌─────┼─────┼─────┤   ├─────┼─────┼─────┐
-                          │ →NF │     │     │   │     │     │ →NF │
+                          │ →NF │     │     │   │     │     │  ·  │
                           │     │  ·  │  ·  │   │  ·  │  ·  │     │
                           │     │     ├─────┤   ├─────┤     │     │
                           │     │     │  ·  │   │  ·  │     │     │
                           └─────┴─────┴─────┘   └─────┴─────┴─────┘
 ```
 
-→NF = tapping Space while held switches to NoFly layer.
+→NF = with the **right** Space held (Flykey active), **tap the left Space** to switch to NoFly. Only the left Space taps into NoFly, so it can't fire while you're simply holding one Space.
 
 ### Key Reference
 
@@ -140,15 +140,15 @@ Right hand becomes a numpad. Left hand provides pure modifier keys (no letter ou
                                 ┌─────┬─────┐   ┌─────┬─────┐
                                 │  ·  │  ·  │   │  ·  │  ·  │
                           ┌─────┼─────┼─────┤   ├─────┼─────┼─────┐
-                          │ →NF │→Bas │     │   │     │     │ →NF │
-                          │     │  e  │  ·  │   │  ·  │  ·  │     │
+                          │  ·  │→Bas │     │   │     │→Bas │  ·  │
+                          │     │  e  │  ·  │   │  ·  │  e  │     │
                           │     │     ├─────┤   ├─────┤     │     │
                           │     │     │  ·  │   │  ·  │     │     │
                           └─────┴─────┴─────┘   └─────┴─────┴─────┘
 ```
 
-- Left **Backspace** (while in Util): `&to 0` — returns to Base even from NoFly context
-- Left **Space** / Right **Space**: switch to NoFly layer
+- Left **Backspace** and right **Enter** (while in Util): `&to 0` — returns to Base even from NoFly context
+- This is what makes the symmetric NoFly exit work: hold one of these two keys, tap the other
 
 ### Key Reference
 
@@ -174,11 +174,11 @@ Right hand becomes a numpad. Left hand provides pure modifier keys (no letter ou
 
 ---
 
-## NoFly Layer — Tap Space while in Flykey
+## NoFly Layer — Hold right Space, tap left Space
 
 **Problem it solves:** Fast typing sometimes briefly activates Flykey when the next key is pressed before Space is fully released, sending a navigation command instead of a character.
 
-**How to enter:** While holding Space (Flykey active), tap Space again, then release both.
+**How to enter:** Hold the **right** Space (Flykey active), then **tap the left** Space, then release both. Because you can't hold and tap the same thumb, this can't fire while you're just holding one Space — which is what kept it from triggering accidentally during editing.
 
 ```
     ·    ·    ·    ·    ·    ·                            ·    ·    ·    ·    ·    ·
@@ -204,4 +204,4 @@ Right hand becomes a numpad. Left hand provides pure modifier keys (no letter ou
 - **Thumb top row** [/⌥ ]/⌘ etc.: similarly send the modifier directly.
 - **Outer shift column** (\/⇧ and //⇧): send ⇧ directly.
 
-**How to exit:** Hold Backspace (Util activates momentarily) → tap Backspace while holding → release. The `&to 0` in Util restores Base. Enter works the same way as Backspace for the initial hold.
+**How to exit:** Hold one of the two big thumb keys (left **Backspace** or right **Enter**) — Util activates momentarily — then **tap the other** → release. The `&to 0` in Util restores Base. This works in both directions: hold-right-Enter/tap-left-Backspace, or hold-left-Backspace/tap-right-Enter.

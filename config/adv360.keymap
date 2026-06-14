@@ -52,7 +52,7 @@
         &kp TAB           &kp Q               &kp W           &kp E               &kp R             &kp T   &none                                                                                                    &none        &kp Y   &kp U              &kp I                &kp O            &kp P                   &kp BSLH
         &hm_hp LEFT_CONTROL GRAVE  &hm LEFT_CONTROL A  &hm LEFT_ALT S  &hm LEFT_COMMAND D  &hm LEFT_SHIFT F  &kp G   &none        &hm_hp LEFT_ALT LBKT  &hm_hp LEFT_COMMAND RBKT      &hm_hp RIGHT_COMMAND MINUS  &hm_hp RIGHT_ALT EQUAL  &none        &kp H   &hm RIGHT_SHIFT J  &hm RIGHT_COMMAND K  &hm RIGHT_ALT L  &hm RIGHT_CONTROL SEMI  &kp SQT
         &hm_hp LEFT_SHIFT BSLH  &kp Z               &kp X           &kp C               &kp V             &kp B                                   &kp HOME                   &kp PG_UP                                                  &kp N   &kp M              &kp COMMA            &kp DOT          &kp FSLH                &hm_hp RIGHT_SHIFT FSLH
-        &mo 2             &kp GRAVE           &kp ESC         &kp LEFT            &kp RIGHT                 &lt_b 4 SPACE  &lt_b 5 BACKSPACE    &kp END                    &kp PG_DN                &lt 5 ENTER          &lt_b 4 SPACE          &kp UP             &kp DOWN             &kp LBKT         &kp RBKT                &mo 2
+        &mo 2             &kp ESC             &kp CAPS        &kp LEFT            &kp RIGHT                 &lt_b 4 SPACE  &lt_b 5 BACKSPACE    &kp END                    &kp PG_DN                &lt 5 ENTER          &lt_b 4 SPACE          &kp UP             &kp DOWN             &kp LBKT         &kp RBKT                &mo 2
       >;
     };
 
@@ -95,7 +95,7 @@
         &trans  &fk_mv_ln_up  &fk_del_ln_l       &fk_del_wd_l       &fk_del_wd_r    &fk_del_ln_r    &trans                                      &trans  &fk_ln_home   &fk_wd_left   &kp UP     &fk_wd_right   &fk_ln_end     &trans
         &trans  &fk_mv_ln_dn  &fk_kill_l         &kp BSPC           &kp DELETE      &fk_kill_r      &trans  &trans  &trans      &trans  &trans  &trans  &fk_bol       &kp LEFT      &kp DOWN   &kp RIGHT      &fk_eol        &trans
         &trans  &kp ESC       &fk_doc_top        &fk_doc_bot        &kp RET         &kp TAB                         &trans      &trans                  &kp HOME      &kp PG_UP     &kp PG_DN  &kp END        &trans         &trans
-        &trans  &trans        &trans             &trans             &trans                          &trans  &to 6   &trans      &trans  &to 6   &trans                &trans        &trans     &trans         &trans         &trans
+        &trans  &trans        &trans             &trans             &trans                          &to 6   &trans  &trans      &trans  &trans  &trans                &trans        &trans     &trans         &trans         &trans
       >;
     };
 
@@ -106,7 +106,7 @@
         &trans  &trans     &trans   &trans    &trans     &trans  &trans                                      &trans  &kp PLUS   &kp N7  &kp N8  &kp N9  &kp STAR   &trans
         &trans  &kp LCTRL  &kp LALT &kp LGUI  &kp LSHFT  &kp SPACE  &trans  &trans  &trans      &trans  &trans  &trans  &kp N0     &kp N4  &kp N5  &kp N6  &kp EQUAL  &trans
         &trans  &ed_undo   &ed_cut  &ed_copy  &ed_paste  &ed_redo                &trans      &trans                  &kp MINUS  &kp N1  &kp N2  &kp N3  &kp FSLH   &trans
-        &trans  &trans     &trans   &trans    &trans             &trans  &to 0   &trans      &trans  &trans  &trans             &trans  &trans  &trans  &trans     &trans
+        &trans  &trans     &trans   &trans    &trans             &trans  &to 0   &trans      &trans  &to 0   &trans             &trans  &trans  &trans  &trans     &trans
       >;
     };
 

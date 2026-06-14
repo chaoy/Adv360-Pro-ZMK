@@ -71,7 +71,7 @@ The keymap defines 10 layers. Layer indices in ZMK bindings are zero-based:
 | 3 | `mod` | Mod | `&mo 3` (hold right upper thumb key) |
 | 4 | `flykey` | — | `&lt_b 4 SPACE` (hold left/right Space thumb key) |
 | 5 | `num` | Util | `&lt_b 5 BACKSPACE` (hold left Backspace) or `&lt 5 ENTER` (hold Enter) |
-| 6 | `plain` | NoFly | `&to 6` from flykey Space keys; latching layer |
+| 6 | `plain` | NoFly | `&to 6` from flykey left Space tap (hold right Space, tap left Space); latching layer |
 | 7 | `extra1` | Red | Reserved for ZMK Studio / Clique |
 | 8 | `extra2` | Purple | Reserved for ZMK Studio / Clique |
 | 9 | `extra3` | Cyan | Reserved for ZMK Studio / Clique |
@@ -130,9 +130,9 @@ A=⌃  S=⌥  D=⌘  F=⇧  G=Space
 Z=Undo(⌘Z)  X=Cut(⌘X)  C=Copy(⌘C)  V=Paste(⌘V)  B=Redo(⌘⇧Z)
 ```
 
-**Thumb — layer navigation:**
-- Left Space / Right Space → NoFly (`&to 6`)
-- Backspace → Base (`&to 0`)
+**Thumb — layer navigation (exit NoFly):**
+- Left Backspace (`&to 0`) and Right Enter (`&to 0`) → Base
+- Exit gesture is symmetric: hold one of the two thumb keys (left Backspace or right Enter), tap the other → Util's `&to 0` fires → Base
 
 ### Dual-role Keys (`hm` and `hm_b` behaviors)
 
@@ -237,7 +237,7 @@ The `hold-preferred` flavor activates the layer as soon as another key is presse
 |-------|----------|--------------|--------------|
 | 4 | `flykey` | — | `&lt_b 4 SPACE` |
 | 5 | `num` | **Util** | `&lt_b 5 BACKSPACE` or `&lt 5 ENTER` |
-| 6 | `plain` | **NoFly** | `&to 6` from flykey Backspace/Enter thumb keys |
+| 6 | `plain` | **NoFly** | `&to 6` from flykey **left Space** (hold right Space, tap left Space) |
 
 ### Key Findings and Decisions
 
@@ -248,8 +248,11 @@ The `hold-preferred` flavor activates the layer as soon as another key is presse
 | `lt` built-in has no `quick_tap_ms` → holding Space fires flykey | Added custom `lt_b` (hold-preferred, no `quick_tap_ms`). Intentionally no quick-tap to avoid swallowing the flykey hold trigger after a space-ending word. |
 | Util layer expanded beyond just numpad | Left hand: pure home-row mods (A/S/D/F=⌃/⌥/⌘/⇧, G=Space) + bottom-row shortcuts (Z-B=Undo/Cut/Copy/Paste/Redo). Right hand: numpad (+/7-9/*/0/4-6/=/−/1-3/). **Committed.** |
 | ZMK upstream patch (`zmk-fix-keymap-layer-reordering.patch`) also fixes the bug properly for Studio builds | Patch authored; can't push — proxy only authorized for `chaoy/Adv360-Pro-ZMK`, not `chaoy/zmk`. |
-| NoFly accidental activation during thumb switching in flykey | Moved `&to 6` from Space keys to Backspace/Enter thumb keys in flykey layer. Space keys now `&trans` (pass-through to `&lt_b 4 SPACE`). **Committed.** |
+| NoFly accidental activation during thumb switching in flykey | Moved `&to 6` from Space keys to Backspace/Enter thumb keys in flykey layer. Space keys now `&trans` (pass-through to `&lt_b 4 SPACE`). **Superseded — see below.** |
 | Home-row mods hard to trigger as modifiers | `hm` switched to balanced + `require-prior-idle-ms=150` ("timeless HRM"). Outer/thumb keys: `hm_b` renamed to `hm_hp` (hold-preferred). Right quote key (`'`) now plain `&kp SQT`. **Committed.** |
+| NoFly *still* triggered accidentally on Backspace/Enter (frequent during editing) | NoFly entry restricted to **left Space tap only** (flykey pos 65 = `&to 6`). The only way to reach it is hold right Space + tap left Space — you cannot hold and tap the same thumb. Backspace/Enter in flykey reverted to `&trans`. **Committed.** |
+| NoFly exit worked only one direction (hold right Enter + tap left Backspace) | Added `&to 0` to right Enter (Util pos 69) to mirror left Backspace. Exit now works either way: hold either thumb key, tap the other. **Committed.** |
+| Bottom-row left keys (backtick, Esc) underused | Remapped Base pos 61/62 from `GRAVE`/`ESC` to `ESC`/`CAPS`. **Committed.** |
 
 ### Blocked / Pending Items
 

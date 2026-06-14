@@ -166,7 +166,7 @@ This fork adds several custom layers and key behaviours on top of the stock Kine
 |---|---|
 | **Flykey layer** | Hold Space → home-row navigation & editing (no arrow keys needed) |
 | **Util layer** | Hold left Backspace or Enter → numpad + pure mods + edit shortcuts |
-| **NoFly layer** | Tap Space in Flykey → disables accidental layer triggers for fast typing |
+| **NoFly layer** | Hold right Space + tap left Space → disables accidental layer triggers for fast typing |
 | **Home-row mods** | Hold A/S/D/F/J/K/L/; for ⌃/⌥/⌘/⇧ modifiers |
-| **Caps Lock → Esc** | Caps Lock sends Escape |
+| **Esc / Caps Lock** | Bottom-row left two keys (next to ←) send Esc and Caps Lock |
 | **Q+W → Esc** | Simultaneous Q+W sends Escape |
