@@ -86,7 +86,7 @@ Hold either Space key. Left hand handles text editing; right hand handles cursor
     ·    ·    ·    ·    ·    ·                            ·    ·    ·    ·    ·    ·
     ·  mv↑   ⌘⌫   ⌥⌫   ⌥⌦   ⌘⌦                          ⌘←   ⌥←    ↑   ⌥→   ⌘→    ·
     ·  mv↓   ^U    ⌫    ⌦   ^K                           ^A    ←    ↓    →   ^E    ·
-    ·  Esc   ⌘↑   ⌘↓    ↵    ⇥                           Hm  PgU  PgD  End    ·    ·
+    ·  Esc   ⌘↑   ⌘↓    ↵    ⇥                           Hm  PgU  PgD  End  Glb    ·
     ·    ·    ·    ·    ·                                 ·    ·    ·    ·         ·
 
                                 ┌─────┬─────┐   ┌─────┬─────┐
@@ -119,7 +119,7 @@ Hold either Space key. Left hand handles text editing; right hand handles cursor
 | V | Return ↵ | M | Page up |
 | B | Tab ⇥ | , | Page down |
 | X | Doc top ⌘↑ | . | End |
-| C | Doc bottom ⌘↓ | | |
+| C | Doc bottom ⌘↓ | / | Globe 🌐 (macOS input-source / Globe usage) |
 
 > **Line start/end:** H/; (^A/^E) work in terminal, Emacs, and macOS native text fields.
 > Y/P (⌘←/⌘→) work in GUI apps like browsers and text editors.

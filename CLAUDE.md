@@ -98,7 +98,7 @@ Flykey is a home-row navigation + text-editing overlay. **Holding Space** activa
 ```
 Row 2 (UIOP): LG(←)  LA(←)   ↑    LA(→)  LG(→)   — line/word jumps
 Row 3 (HJKL): LC(A)    ←      ↓      →    LC(E)   — arrow keys + BOL/EOL
-Row 4 (NM,.): Home  PgUp   PgDn   End              — page navigation
+Row 4 (NM,./): Home  PgUp   PgDn   End   Globe     — page navigation; / = &kp GLOBE (macOS Globe / next-input-source, consumer 0x029D)
 ```
 
 ### Left-hand editing layout
@@ -253,6 +253,7 @@ The `hold-preferred` flavor activates the layer as soon as another key is presse
 | NoFly *still* triggered accidentally on Backspace/Enter (frequent during editing) | NoFly entry restricted to **left Space tap only** (flykey pos 65 = `&to 6`). The only way to reach it is hold right Space + tap left Space — you cannot hold and tap the same thumb. Backspace/Enter in flykey reverted to `&trans`. **Committed.** |
 | NoFly exit worked only one direction (hold right Enter + tap left Backspace) | Added `&to 0` to right Enter (Util pos 69) to mirror left Backspace. Exit now works either way: hold either thumb key, tap the other. **Committed.** |
 | Bottom-row left keys (backtick, Esc) underused | Remapped Base pos 61/62 from `GRAVE`/`ESC` to `ESC`/`CAPS`. **Committed.** |
+| Want macOS Globe keycode for apps that bind to Globe (e.g. Typeless) | `refil/zmk@adv360-z3.5-2` defines `GLOBE` = `C_AC_NEXT_KEYBOARD_LAYOUT_SELECT` (consumer 0x029D). Bound `&kp GLOBE` on flykey pos 58 (`/`). **Caveat:** sends consumer "next input source"; does NOT set the Fn modifier flag / keycode 0x3F, so apps that detect Globe via the Fn flag may not recognize it. Needs hardware test. **Committed.** |
 
 ### Blocked / Pending Items
 
